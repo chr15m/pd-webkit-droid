@@ -1,8 +1,14 @@
+ * ticker - start of bar message with javascript ticker
+ * 'menu' button
+   * about
+   * license
+   * help
+ * still some instruments you can't hear
+
  + try out spinner again?
  + make button colours not shades
  + remove debug messages on pause/resume
  + new beat button color on press
  + reduce click delay time
  + only play hearable notes
- - ticker
- - better note picking algorithm - no repeats
+ + better note picking algorithm
