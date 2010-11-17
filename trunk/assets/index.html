@@ -230,14 +230,14 @@
 		function togglerecord() {
 			if (record) {
 				// stop recording
-				recordicon.src = "stop.png";
+				recordicon.src = "record.png";
 				record = false;
-				Pd.send("record", "bang");
+				Pd.send("stop", "bang");
 			} else {
 				// start recording
-				recordicon.src = "record.png";
+				recordicon.src = "stop.png";
 				record = true;
-				Pd.send("stop", "bang");
+				Pd.send("record", "bang");
 			}
 		}
 		
