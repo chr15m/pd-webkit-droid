@@ -194,10 +194,10 @@
 					var tick = parseInt(parts[1]);
 					ticker.style.left = positions[tick * 4][0] - 2;
 					ticker.style.top = positions[tick * 4][1] - 2;
-				}
-				if (!tickerinit) {
-					ticker.style.display = "block";
-					tickerinit = true;
+					if (!tickerinit) {
+						ticker.style.display = "block";
+						tickerinit = true;
+					}
 				}
 			}
 		}
