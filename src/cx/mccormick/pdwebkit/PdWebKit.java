@@ -314,6 +314,7 @@ public class PdWebKit extends Activity {
 				finish();
 			}
 			bindService(new Intent(that, PdService.class), serviceConnection, BIND_AUTO_CREATE);
+			mWebView.loadUrl("file://" + path + "/index.html");
 		}
 	}
 	
