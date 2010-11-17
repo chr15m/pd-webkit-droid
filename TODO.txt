@@ -1,11 +1,15 @@
- * ticker - start of bar message with javascript ticker
- * on lose focus, pause timers etc.
- * 'menu' button
-   * about
-   * license
-   * help
  * still some instruments you can't hear
+	* make pluck simpler - no filter or cutoff
+	* send params to console to find bad ones
+ * "progressive" style random note picker
+ * upload the license file to http://mccormick.cx/projects/CanOfBeats/LICENSE.txt
 
+ + 'menu' button
+   + about
+   + license
+   + help
+ + ticker - start of bar message with javascript ticker
+ + on lose focus, pause timers etc.
  + try out spinner again?
  + make button colours not shades
  + remove debug messages on pause/resume
