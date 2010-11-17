@@ -1,4 +1,3 @@
- * On-off speakers
  * button coloring
  * hook up kaospad
- * 
+ * make acid work
