@@ -1,4 +1,4 @@
-package cx.mccormick.lab;
+package cx.mccormick.pdwebkit;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,7 +39,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuInflater;
 
-public class GarageAcidLab extends Activity {
+public class PdWebKit extends Activity {
 
 	private final Handler handler = new Handler();
 	private PdService pdService = null;
@@ -137,8 +137,8 @@ public class GarageAcidLab extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		final ProgressDialog pd = new ProgressDialog(GarageAcidLab.this);
-		final GarageAcidLab that = this;
+		final ProgressDialog pd = new ProgressDialog(PdWebKit.this);
+		final PdWebKit that = this;
 		super.onCreate(savedInstanceState);
 		Timer t = new Timer(); 
 		pd.setMessage("Loading. Please wait...");
@@ -316,7 +316,7 @@ public class GarageAcidLab extends Activity {
 			patch = PdUtils.openPatch(path);
 			String name = res.getString(R.string.app_name);
 			pdService.initAudio(22050, 0, 2, -1);   // negative values are replaced by defaults/preferences
-			pdService.startAudio(new Intent(this, GarageAcidLab.class), android.R.drawable.ic_media_play, name, "Return to " + name + ".");
+			pdService.startAudio(new Intent(this, PdWebKit.class), android.R.drawable.ic_media_play, name, "Return to " + name + ".");
 		} catch (IOException e) {
 			post(e.toString() + "; exiting now");
 			finish();
