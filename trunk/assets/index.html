@@ -129,7 +129,6 @@
 					} else {
 						opacity = 1.0;
 					}
-					//console.log(opacity);
 					loader.children[l].style.opacity = opacity;
 				}
 				loadercount += 1;
@@ -153,23 +152,10 @@
 			}
 		}
 		
-		function dec2hex(i)
-		{
-			var result = "00";
-			if      (i >= 0    && i <= 15)    { result = "0" + i.toString(16); }
-			//else if (i >= 16   && i <= 255)   { result = "00"  + i.toString(16); }
-			//else if (i >= 256  && i <= 4095)  { result = "0"   + i.toString(16); }
-			//else if (i >= 4096 && i <= 65535) { result =         i.toString(16); }
-			else { result = i.toString(16); }
-			return result;
-		}
-
 		var colors = ["white", "red", "blue", "black", "gray"];
 		function generateMousedown(idx, name, id, data) {
 			return function(ev) {
 				data[idx] = (data[idx] + 1) % 5;
-				//var clr = dec2hex((5  - data[idx]) / 5 * 255);
-				//var clr = colors[data[idx]];
 				this.style.backgroundColor = colors[data[idx]];
 				Pd.send(name, id + " " + idx + " " + data[idx]);
 			}
@@ -179,7 +165,6 @@
 			for (var s=0; s<2; s++) {
 				synth_row[s] = document.getElementById('synths').rows[s].cells;
 				for (var i=0; i<synth_row[s].length; i++) {
-					//console.log(synth_row[s][i]);
 					synth_row[s][i].innerHTML = "&nbsp;";
 					synth_row[s][i].ontouchstart = generateMousedown(i, "synth", s, synth_data[s]);
 				}
@@ -197,10 +182,12 @@
 				newMessage("fresh beat!");
 				stopLoader();
 				document.getElementById("buttons").style.display = "block";
+				//Pd.sendBang("startticker");
 			} else {
 				var parts = what.split(" ");
 				if (parts[0] == "tick") {
 					var tick = parts[1];
+					document.getElementById("ticker").innerHTML = tick;
 				}
 			}
 		}
@@ -212,6 +199,7 @@
 		<div id='buttons'><button ontouchstart='startLoader(); Pd.sendBang("shake"); this.style.background="red"' ontouchend='this.style.background="#ffaaaa"'>new beat</button></div>
 		<div id='loading'>Loading...</div>
 		<div id='loader'><div class='loaderbit'></div><div class='loaderbit'></div><div class='loaderbit'></div><div class='loaderbit'></div><div class='loaderbit'></div></div>
+		<div id='ticker'></div>
 		<table id="synths">
 			<tr>
 				<td></td>
