@@ -1,5 +1,0 @@
-mysong.llz:
-	mysong.ll/
-		song.json 	// json encoded config file
-		samples/ 	// folder containing samples used
-		samples/test.wav
