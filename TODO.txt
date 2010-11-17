@@ -1,6 +1,6 @@
  * ticker
  * try out spinner again?
- * make button colours not shades
+ + make button colours not shades
  + remove debug messages on pause/resume
  + new beat button color on press
  + reduce click delay time
