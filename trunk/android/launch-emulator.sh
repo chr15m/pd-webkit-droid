@@ -1,3 +1,4 @@
 #!/bin/sh
 
-emulator -avd test_avd
+emulator -avd test_avd &
+adb logcat &
