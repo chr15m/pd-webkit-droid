@@ -11,6 +11,8 @@ import java.util.TimerTask;
 import java.lang.StringBuffer;
 
 import org.puredata.android.service.PdService;
+import org.puredata.android.utils.Properties;
+import org.puredata.android.io.AudioParameters;
 import org.puredata.core.PdBase;
 import org.puredata.core.utils.PdUtils;
 import org.puredata.core.utils.IoUtils;
@@ -163,7 +165,7 @@ public class PdWebKit extends Activity {
 		File libDir = getFilesDir();
 		try {
 			IoUtils.extractZipResource(res.openRawResource(R.raw.abstractions), libDir, false);
-			IoUtils.extractZipResource(res.openRawResource(IoUtils.hasArmeabiV7a() ? R.raw.externals_v7a : R.raw.externals), libDir, false);
+			IoUtils.extractZipResource(res.openRawResource(Properties.hasArmeabiV7a ? R.raw.externals_v7a : R.raw.externals), libDir, false);
 			//IoUtils.extractZipResource(getResources().openRawResource(R.raw.patch), new File("/sdcard/" + res.getString(R.string.app_name)), true);
 		} catch (IOException e) {
 			Log.e("Player", e.toString());
@@ -332,12 +334,26 @@ public class PdWebKit extends Activity {
 	}
 
 	private void initPd() {
+		int SAMPLE_RATE = 22050;
 		Resources res = getResources();
 		PdBase.setReceiver(dispatcher);
 		dispatcher.addListener("webkit", webkitListener);
 		String name = res.getString(R.string.app_name);
 		try {
-			pdService.initAudio(22050, 0, 2, -1);   // negative values are replaced by defaults/preferences
+			if (AudioParameters.suggestSampleRate() < SAMPLE_RATE) {
+				post("required sample rate not available; exiting");
+				finish();
+				return;
+			}
+			int nIn = Math.min(AudioParameters.suggestInputChannels(), 1);
+			if (nIn == 0) post("warning: audio input not available");
+			int nOut = Math.min(AudioParameters.suggestOutputChannels(), 2);
+			if (nOut == 0) {
+				post("audio output not available; exiting");
+				finish();
+				return;
+			}
+			pdService.initAudio(SAMPLE_RATE, nIn, nOut, -1);   // negative values are replaced by defaults/preferences
 		} catch (IOException e) {
 			post(e.toString() + "; exiting now");
 			finish();
