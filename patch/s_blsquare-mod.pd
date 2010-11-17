@@ -1,0 +1,15 @@
+#N canvas 473 354 607 288 10;
+#X obj 80 43 inlet~;
+#X obj 335 53 inlet;
+#X text 78 23 freq~;
+#X text 335 35 phase;
+#X obj 81 214 outlet~;
+#X text 358 131 include pwm here;
+#X obj 145 120 rj/s_blsquare;
+#X msg 187 63 0.5;
+#X obj 187 40 loadbang;
+#X connect 0 0 6 0;
+#X connect 1 0 6 2;
+#X connect 6 0 4 0;
+#X connect 7 0 6 1;
+#X connect 8 0 7 0;

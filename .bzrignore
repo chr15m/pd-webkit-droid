@@ -3,3 +3,5 @@ android/gen/cx/mccormick/littlelooper/*
 android/gen
 bin
 bin
+build.xml
+local.properties
