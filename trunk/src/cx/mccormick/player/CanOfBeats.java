@@ -54,11 +54,11 @@ public class CanOfBeats extends Activity {
 		public synchronized void receiveList(Object... args) {
 			StringBuffer msg = new StringBuffer();
 			for (int a=0; a<args.length; a++) {
-				if (a != 0 && ((String)args[a]).length() > 0)
+				if (a != 0)
 					msg.append(" ");
 				msg.append((String) args[a]);
 			}
-			mWebView.loadUrl("javascript:PdReceive('" + msg.toString() + "');");
+			js("PdReceive('" + msg.toString() + "')");
 		}
 		
 		// the remaining methods will never be called
@@ -69,20 +69,31 @@ public class CanOfBeats extends Activity {
 			for (int a=0; a<args.length; a++) {
 				if (a != 0)
 					msg.append(" ");
-				msg.append((String) args[a]);
+				msg.append(args[a].toString());
 			}
 			if (msg.length() > 0) {
 				space = " ";
 			} else {
 				space = "";
 			}
-			mWebView.loadUrl("javascript:PdReceive('" + symbol + space + msg.toString() + "');");
+			js("PdReceive('" + symbol + space + msg.toString() + "')");
 		}
 		
-		@Override public void receiveSymbol(String symbol)  { mWebView.loadUrl("javascript:PdReceive('" + symbol + "');"); }
-		@Override public void receiveFloat(float x) { mWebView.loadUrl("javascript:PdReceive(" + x + ");"); }
-		@Override public void receiveBang() { mWebView.loadUrl("javascript:PdReceive('bang');"); }
+		@Override public void receiveSymbol(String symbol)  { js("PdReceive('" + symbol + "')"); }
+		@Override public void receiveFloat(float x) { js("PdReceive(" + x + ")"); }
+		@Override public void receiveBang() { js("PdReceive('bang')"); }
 	};
+
+	private void js(final String call) {
+		//post("js: [" + call + "]");
+		mWebView.loadUrl("javascript:" + call + ";");
+		/*handler.post(new Runnable() {
+			@Override
+			public void run() {
+				mWebView.loadUrl("javascript:" + call + ";");
+			}
+		});*/
+	}
 
 	private void post(final String msg) {
 		final Resources res = getResources();
@@ -117,8 +128,6 @@ public class CanOfBeats extends Activity {
 		pd.setCancelable(false);
 		pd.setIndeterminate(true);
 		pd.show();
-		Log.e("COB", "start");
-		Log.e("COB", "initGui");
 		initGui();
 		t.schedule(new TimerTask() {
 			public void run() {
@@ -131,17 +140,6 @@ public class CanOfBeats extends Activity {
 				});
 			}
 		}, 2000);
-		/*handler.post(new Runnable() {
-			@Override
-			public void run() {
-				Log.e("COB", "unpackResources");
-				unpackResources();
-				Log.e("COB", "bindService");
-				bindService(new Intent(that, PdService.class), serviceConnection, BIND_AUTO_CREATE);
-				Log.e("COB", "dismiss");
-				pd.dismiss();
-			}
-		});*/
 	}
 	
 	private void unpackResources() {
@@ -195,9 +193,9 @@ public class CanOfBeats extends Activity {
 
 		mWebView.setWebChromeClient(new MyWebChromeClient());
 		mWebView.addJavascriptInterface(new JavaScriptInterface(), "Pd");
-		Log.d("initGui", "load index");
+		//Log.d("initGui", "load index");
 		mWebView.loadUrl("file:///android_asset/index.html");
-		Log.d("initGui", "done");
+		//Log.d("initGui", "done");
 	}
 
 	final class JavaScriptInterface {
@@ -234,7 +232,7 @@ public class CanOfBeats extends Activity {
 			
  			ol = list.toArray();
 			PdBase.sendList(dest, ol);
-			Log.e("sending list", "[" + dest + "] -> " + ol.toString());
+			//Log.e("sending list", "[" + dest + "] -> " + ol.toString());
 		}
 		
 		public void sendBang(String s) {
