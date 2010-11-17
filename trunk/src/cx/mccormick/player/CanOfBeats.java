@@ -78,6 +78,7 @@ public class CanOfBeats extends Activity {
 				space = "";
 			}
 			//post("[" + symbol + "]" + space + msg.toString());
+			Log.e("receiveMessage", "[" + symbol + "]" + space + msg.toString());
 			// dispatch key event
 			/*if (symbol.equals("key")) {
 				int x = ((Float)args[0]).intValue();
@@ -97,9 +98,8 @@ public class CanOfBeats extends Activity {
 	private void js(final String call) {
 		this.runOnUiThread(new Runnable() {
 			public void run() {
-				mWebView.pauseTimers();
 				mWebView.loadUrl("javascript:" + call + ";");
-				mWebView.resumeTimers();
+				//mWebView.postInvalidate();
 			}
 		});
 		// mWebView.loadUrl("javascript:" + call + ";");
@@ -119,7 +119,11 @@ public class CanOfBeats extends Activity {
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
 			pdService = ((PdService.PdBinder) service).getService();
-			initPd();
+			handler.post(new Runnable() {
+				public void run() {
+					initPd();
+				}
+			});
 		}
 		
 		@Override
@@ -145,9 +149,7 @@ public class CanOfBeats extends Activity {
 					public void run() {
 						unpackResources();
 						bindService(new Intent(that, PdService.class), serviceConnection, BIND_AUTO_CREATE);
-						mWebView.pauseTimers();
 						pd.dismiss();
-						mWebView.resumeTimers();
 					}
 				});
 			}
@@ -209,7 +211,7 @@ public class CanOfBeats extends Activity {
 		//webSettings.setDomStorageEnabled(false);
 		//webSettings.setGeolocationEnabled(false);
 		webSettings.setPluginsEnabled(false);
-		webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+		webSettings.setRenderPriority(WebSettings.RenderPriority.NORMAL);
 
 		mWebView.setWebChromeClient(new MyWebChromeClient());
 		mWebView.addJavascriptInterface(new JavaScriptInterface(), "Pd");
@@ -239,7 +241,7 @@ public class CanOfBeats extends Activity {
 		public void send(String dest, String s) {
 			List<Object> list = new ArrayList<Object>();
 			String[] bits = s.split(" ");
-			Object[] ol;
+					
 			for (int i=0; i < bits.length; i++) {
 				try {
 					list.add(Float.parseFloat(bits[i]));
@@ -248,7 +250,7 @@ public class CanOfBeats extends Activity {
 				}
 			}
 			
- 			ol = list.toArray();
+			Object[] ol = list.toArray();
 			PdBase.sendList(dest, ol);
 		}
 		
