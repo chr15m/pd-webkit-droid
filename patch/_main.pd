@@ -30,27 +30,15 @@
 #X msg 6 28 \; acid/makenew bang \; acid/beat-volume 64 \; acid/acid-volume
 64 \; webkit init \;;
 #N canvas 0 0 450 300 speakers 0;
-#X obj 148 76 route beats acid;
-#X obj 66 104 sel true false;
-#X obj 174 104 sel true false;
-#X msg 66 125 1;
-#X msg 106 125 0;
-#X msg 174 125 1;
-#X msg 214 125 0;
-#X obj 148 52 inlet;
-#X obj 189 201 outlet;
-#X obj 74 201 outlet;
-#X connect 0 0 1 0;
+#X obj 24 61 route beats acid;
+#X obj 24 18 inlet;
+#X obj 70 84 outlet;
+#X obj 24 105 outlet;
+#X obj 24 39 list trim;
+#X connect 0 0 3 0;
 #X connect 0 1 2 0;
-#X connect 1 0 3 0;
-#X connect 1 1 4 0;
-#X connect 2 0 5 0;
-#X connect 2 1 6 0;
-#X connect 3 0 9 0;
-#X connect 4 0 9 0;
-#X connect 5 0 8 0;
-#X connect 6 0 8 0;
-#X connect 7 0 0 0;
+#X connect 1 0 4 0;
+#X connect 4 0 0 0;
 #X restore 138 125 pd speakers;
 #X obj 8 104 drums acid;
 #X msg 367 28 \; acid/picksamples bang \; acid/pickbeat bang \; webkit

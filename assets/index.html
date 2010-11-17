@@ -196,7 +196,7 @@
 		
 		function speaker(which) {
 			speakers[which] = !speakers[which];
-			send("speaker", which + " " + speakers[which]);
+			send("speaker", which + " " + (1 * speakers[which]));
 			if (speakers[which]) {
 				speakerimages[which].src = "speaker.png";
 			} else {
