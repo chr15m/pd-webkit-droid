@@ -16,6 +16,7 @@ import org.puredata.core.utils.PdDispatcher;
 import org.puredata.core.utils.PdListener;
 
 import android.app.Activity;
+//import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -107,17 +108,13 @@ public class CanOfBeats extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//final ProgressDialog dialog = ProgressDialog.show(CanOfBeats.this, "", "Loading. Please wait...", true);
 		initGui();
-		final CanOfBeats that = this;
-		handler.post(new Runnable() {
-			@Override
-			public void run() {
-				unpackResources();
-				bindService(new Intent(that, PdService.class), serviceConnection, BIND_AUTO_CREATE);
-			}
-		});
+		unpackResources();
+		bindService(new Intent(this, PdService.class), serviceConnection, BIND_AUTO_CREATE);
+		//dialog.dismiss();
 	}
-
+	
 	private void unpackResources() {
 		Resources res = getResources();
 		File libDir = getFilesDir();
@@ -133,22 +130,23 @@ public class CanOfBeats extends Activity {
 		PdBase.addToSearchPath("/sdcard/" + res.getString(R.string.app_name) + "/patch/");
 	}
 
-	/*
 	// this callback makes sure that we handle orientation changes without audio glitches
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
-		initGui();
-	}*/
+		//initGui();
+	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
+		post("pause");
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+		post("resume");
 	}
 
 	@Override
@@ -260,7 +258,7 @@ public class CanOfBeats extends Activity {
 		try {
 			patch = PdUtils.openPatch(path);
 			String name = res.getString(R.string.app_name);
-			pdService.startAudio(-1, 0, 2, -1,   // negative values are replaced by defaults/preferences
+			pdService.startAudio(22050, 0, 2, -1,   // negative values are replaced by defaults/preferences
 					new Intent(this, CanOfBeats.class), android.R.drawable.ic_media_play, name, "Return to " + name + ".");
 		} catch (IOException e) {
 			post(e.toString() + "; exiting now");
