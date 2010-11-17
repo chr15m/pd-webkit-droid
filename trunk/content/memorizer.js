@@ -144,7 +144,7 @@ function WinScreen(where, app)
 				createCookie("highscore", this.app.points, 3650);
 				this.highscore.innerHTML = "<br/>New best score!<br/>" + this.app.points + " moves";
 			} else {
-				this.highscore.innerHTML = "<br/>Didn't beat " + hsv + " moves";
+				this.highscore.innerHTML = "<br/>" + this.app.points + " moves<br/>Didn't beat " + hsv + " moves";
 			}
 		}
 		repr.style.visibility = "visible";
@@ -552,7 +552,6 @@ function Memorizer(where)
 	
 	this.CheckMatch = function(t)
 	{
-		this.points += 1;
 		if (this.lastClicked)
 		{
 			if (this.lastClicked.i == t.i && this.lastClicked.c != t.c)
@@ -576,6 +575,7 @@ function Memorizer(where)
 				this.lastClicked.Flip();
 			}
 			this.lastClicked = null;
+			this.points += 1;
 		}
 		else
 		{
