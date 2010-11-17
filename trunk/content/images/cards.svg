@@ -19,6 +19,31 @@
    version="1.1">
   <defs
      id="defs4">
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#pattern4896"
+       id="pattern3395"
+       patternTransform="matrix(-0.88890588,0,0,-0.8704051,314.17234,817.03361)" />
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#pattern4864"
+       id="pattern4898"
+       patternTransform="matrix(0,-0.43442403,0.42607527,0,395.41205,730.32864)" />
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#pattern4864"
+       id="pattern4896"
+       patternTransform="matrix(-0.43442403,0,0,-0.42607527,782.96642,657.95013)" />
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#pattern4858"
+       id="pattern4864"
+       patternTransform="matrix(0,-0.43442403,0.42607527,0,477.41205,728.32864)" />
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#pattern49876"
+       id="pattern4858"
+       patternTransform="translate(236,381.375)" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="0 : 526.18109 : 1"
@@ -1605,8 +1630,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="459.49376"
-     inkscape:cy="444.49173"
+     inkscape:cx="254.23495"
+     inkscape:cy="425.47842"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      inkscape:showpageshadow="false"
@@ -1637,6 +1662,33 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/chrism/dev/android/Memorizer/android/res/drawable/icon.png"
+       y="549.36218"
+       x="611"
+       height="48"
+       width="48"
+       id="rect3419"
+       style="fill:none;stroke:none" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3397"
+       width="95"
+       height="95"
+       x="-35.5"
+       y="596.86218"
+       inkscape:export-filename="/home/chrism/dev/android/Memorizer/android/res/drawable/icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="color:#000000;fill:url(#pattern4896);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.98599988;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible"
+       d="m 654.02009,587.86918 -34.04027,0 c -2.48573,0 -4.48686,-1.96269 -4.48686,-4.40064 l 0,-14.21272 c 0,-2.43796 2.00113,-4.40064 4.48686,-4.40064 l 34.04027,0 c 2.48572,0 4.48687,1.96268 4.48687,4.40064 l 0,14.21272 c 0,2.43795 -2.00115,4.40064 -4.48687,4.40064 z"
+       id="path4880"
+       inkscape:export-filename="/home/chrism/dev/android/Memorizer/android/res/drawable/icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <rect
        style="opacity:1;color:black;fill:white;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.45000005;stroke-linecap:square;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
        id="rect4897"
@@ -3751,6 +3803,292 @@
          sodipodi:type="arc"
          style="fill:#ffaaaa;fill-opacity:1;stroke:none"
          id="path3374"
+         sodipodi:cx="365"
+         sodipodi:cy="264.50504"
+         sodipodi:rx="23.571428"
+         sodipodi:ry="63.803135"
+         d="m 341.42889,264.17512 c 0.0673,-35.23703 10.67503,-63.65457 23.69299,-63.47237 13.01797,0.18221 23.51655,28.89517 23.44923,64.1322 -0.0673,35.23703 -10.67503,63.65457 -23.69299,63.47237 -12.97674,-0.18163 -23.4585,-28.72042 -23.44954,-63.84631 L 365,264.50504 z"
+         sodipodi:start="3.1467635"
+         sodipodi:end="9.425468"
+         transform="matrix(0.02504064,0.04655531,-0.03542778,0.04582794,18.39983,135.176)" />
+    </g>
+    <rect
+       ry="4.8951697"
+       y="378.49234"
+       x="-600.86981"
+       height="47.015316"
+       width="25.015316"
+       id="rect3352"
+       style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.98468339;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible"
+       transform="matrix(0,-1,1,0,0,0)"
+       inkscape:export-filename="/home/chrism/dev/android/Memorizer/content/images/cardblank.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <g
+       id="g4126"
+       transform="matrix(0.4782543,0,0,0.4782543,390.07964,502.40924)"
+       inkscape:export-filename="/home/chrism/dev/android/Memorizer/content/images/cardblank.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.108708,0,0,0.108708,-14.83166,102.2249)"
+         sodipodi:end="12.495366"
+         sodipodi:start="6.2184213"
+         d="m 502.56963,760.25953 c 4.90192,78.73242 -52.39651,146.69702 -127.97962,151.80319 -75.58312,5.10617 -140.82913,-54.5797 -145.73105,-133.31212 -4.90193,-78.73242 52.3965,-146.69702 127.97962,-151.80319 75.2498,-5.08365 140.32319,54.0707 145.673,132.42266"
+         sodipodi:ry="142.85715"
+         sodipodi:rx="137.14285"
+         sodipodi:cy="769.50507"
+         sodipodi:cx="365.71429"
+         id="path4128"
+         style="fill:#ff0000;fill-opacity:1;stroke:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.108708,0,0,0.108708,-14.83049,102.34)"
+         sodipodi:end="6.2837157"
+         sodipodi:start="3.1467635"
+         d="m 228.57328,768.17543 c 0.39164,-142.01418 62.10926,-256.54412 137.85016,-255.80978 75.49248,0.73193 136.47373,115.72552 136.43369,257.2758"
+         sodipodi:ry="257.14285"
+         sodipodi:rx="137.14285"
+         sodipodi:cy="769.50507"
+         sodipodi:cx="365.71429"
+         id="path4130"
+         style="fill:#ff0000;fill-opacity:1;stroke:none"
+         sodipodi:type="arc" />
+      <text
+         sodipodi:linespacing="100%"
+         id="text4132"
+         y="192.78555"
+         x="18.402042"
+         style="font-size:21.74176598px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Densmore"
+         xml:space="preserve"><tspan
+           y="192.78555"
+           x="18.402042"
+           id="tspan4134"
+           sodipodi:role="line">6</tspan></text>
+      <path
+         transform="matrix(0.02504064,0.04655531,-0.03542778,0.04582794,18.39983,135.176)"
+         sodipodi:end="9.425468"
+         sodipodi:start="3.1467635"
+         d="m 341.42889,264.17512 c 0.0673,-35.23703 10.67503,-63.65457 23.69299,-63.47237 13.01797,0.18221 23.51655,28.89517 23.44923,64.1322 -0.0673,35.23703 -10.67503,63.65457 -23.69299,63.47237 -12.97674,-0.18163 -23.4585,-28.72042 -23.44954,-63.84631 L 365,264.50504 z"
+         sodipodi:ry="63.803135"
+         sodipodi:rx="23.571428"
+         sodipodi:cy="264.50504"
+         sodipodi:cx="365"
+         id="path4136"
+         style="fill:#ffaaaa;fill-opacity:1;stroke:none"
+         sodipodi:type="arc" />
+    </g>
+    <path
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/chrism/dev/podsix/Memorizer/images/cardback.png"
+       id="path4856"
+       d="m 465.493,601.38231 0,-34.04027 c 0,-2.48573 1.96269,-4.48686 4.40064,-4.48686 l 14.21272,0 c 2.43796,0 4.40064,2.00113 4.40064,4.48686 l 0,34.04027 c 0,2.48572 -1.96268,4.48687 -4.40064,4.48687 l -14.21272,0 c -2.43795,0 -4.40064,-2.00115 -4.40064,-4.48687 z"
+       style="color:#000000;fill:url(#pattern4898);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.98599988;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible" />
+    <rect
+       ry="4.4770932"
+       y="-601.86218"
+       x="-501.5"
+       height="42.999931"
+       width="22.999933"
+       id="rect4866"
+       style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00006664;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible"
+       transform="scale(-1,-1)"
+       inkscape:export-filename="/home/chrism/dev/android/Memorizer/content/images/cardblank.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <g
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/chrism/dev/android/Memorizer/content/images/cardblank.png"
+       transform="matrix(0.55235588,0,0,0.55235588,476.23272,481.0916)"
+       id="g4868">
+      <path
+         sodipodi:type="arc"
+         style="fill:#ff0000;fill-opacity:1;stroke:none"
+         id="path4870"
+         sodipodi:cx="365.71429"
+         sodipodi:cy="769.50507"
+         sodipodi:rx="137.14285"
+         sodipodi:ry="142.85715"
+         d="m 502.56963,760.25953 c 4.90192,78.73242 -52.39651,146.69702 -127.97962,151.80319 -75.58312,5.10617 -140.82913,-54.5797 -145.73105,-133.31212 -4.90193,-78.73242 52.3965,-146.69702 127.97962,-151.80319 75.2498,-5.08365 140.32319,54.0707 145.673,132.42266"
+         sodipodi:start="6.2184213"
+         sodipodi:end="12.495366"
+         transform="matrix(0.108708,0,0,0.108708,-14.83166,102.2249)"
+         sodipodi:open="true" />
+      <path
+         sodipodi:type="arc"
+         style="fill:#ff0000;fill-opacity:1;stroke:none"
+         id="path4872"
+         sodipodi:cx="365.71429"
+         sodipodi:cy="769.50507"
+         sodipodi:rx="137.14285"
+         sodipodi:ry="257.14285"
+         d="m 228.57328,768.17543 c 0.39164,-142.01418 62.10926,-256.54412 137.85016,-255.80978 75.49248,0.73193 136.47373,115.72552 136.43369,257.2758"
+         sodipodi:start="3.1467635"
+         sodipodi:end="6.2837157"
+         transform="matrix(0.108708,0,0,0.108708,-14.83049,102.34)"
+         sodipodi:open="true" />
+      <text
+         xml:space="preserve"
+         style="font-size:21.74176598px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Densmore"
+         x="18.402042"
+         y="192.78555"
+         id="text4874"
+         sodipodi:linespacing="100%"><tspan
+           sodipodi:role="line"
+           id="tspan4876"
+           x="18.402042"
+           y="192.78555">6</tspan></text>
+      <path
+         sodipodi:type="arc"
+         style="fill:#ffaaaa;fill-opacity:1;stroke:none"
+         id="path4878"
+         sodipodi:cx="365"
+         sodipodi:cy="264.50504"
+         sodipodi:rx="23.571428"
+         sodipodi:ry="63.803135"
+         d="m 341.42889,264.17512 c 0.0673,-35.23703 10.67503,-63.65457 23.69299,-63.47237 13.01797,0.18221 23.51655,28.89517 23.44923,64.1322 -0.0673,35.23703 -10.67503,63.65457 -23.69299,63.47237 -12.97674,-0.18163 -23.4585,-28.72042 -23.44954,-63.84631 L 365,264.50504 z"
+         sodipodi:start="3.1467635"
+         sodipodi:end="9.425468"
+         transform="matrix(0.02504064,0.04655531,-0.03542778,0.04582794,18.39983,135.176)" />
+    </g>
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/chrism/dev/android/Memorizer/android/res/drawable/icon.png"
+       transform="matrix(0,1,-1,0,0,0)"
+       style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00006664;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible"
+       id="rect4882"
+       width="22.999933"
+       height="42.999931"
+       x="559.86218"
+       y="-654.49994"
+       ry="4.4770932" />
+    <g
+       id="g4884"
+       transform="matrix(0.44282981,0,0,0.44282981,621.96257,491.6508)"
+       inkscape:export-filename="/home/chrism/dev/android/Memorizer/android/res/drawable/icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.108708,0,0,0.108708,-14.83166,102.2249)"
+         sodipodi:end="12.495366"
+         sodipodi:start="6.2184213"
+         d="m 502.56963,760.25953 c 4.90192,78.73242 -52.39651,146.69702 -127.97962,151.80319 -75.58312,5.10617 -140.82913,-54.5797 -145.73105,-133.31212 -4.90193,-78.73242 52.3965,-146.69702 127.97962,-151.80319 75.2498,-5.08365 140.32319,54.0707 145.673,132.42266"
+         sodipodi:ry="142.85715"
+         sodipodi:rx="137.14285"
+         sodipodi:cy="769.50507"
+         sodipodi:cx="365.71429"
+         id="path4886"
+         style="fill:#ff0000;fill-opacity:1;stroke:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:open="true"
+         transform="matrix(0.108708,0,0,0.108708,-14.83049,102.34)"
+         sodipodi:end="6.2837157"
+         sodipodi:start="3.1467635"
+         d="m 228.57328,768.17543 c 0.39164,-142.01418 62.10926,-256.54412 137.85016,-255.80978 75.49248,0.73193 136.47373,115.72552 136.43369,257.2758"
+         sodipodi:ry="257.14285"
+         sodipodi:rx="137.14285"
+         sodipodi:cy="769.50507"
+         sodipodi:cx="365.71429"
+         id="path4888"
+         style="fill:#ff0000;fill-opacity:1;stroke:none"
+         sodipodi:type="arc" />
+      <text
+         sodipodi:linespacing="100%"
+         id="text4890"
+         y="192.78555"
+         x="18.402042"
+         style="font-size:21.74176598px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Densmore"
+         xml:space="preserve"><tspan
+           y="192.78555"
+           x="18.402042"
+           id="tspan4892"
+           sodipodi:role="line">6</tspan></text>
+      <path
+         transform="matrix(0.02504064,0.04655531,-0.03542778,0.04582794,18.39983,135.176)"
+         sodipodi:end="9.425468"
+         sodipodi:start="3.1467635"
+         d="m 341.42889,264.17512 c 0.0673,-35.23703 10.67503,-63.65457 23.69299,-63.47237 13.01797,0.18221 23.51655,28.89517 23.44923,64.1322 -0.0673,35.23703 -10.67503,63.65457 -23.69299,63.47237 -12.97674,-0.18163 -23.4585,-28.72042 -23.44954,-63.84631 L 365,264.50504 z"
+         sodipodi:ry="63.803135"
+         sodipodi:rx="23.571428"
+         sodipodi:cy="264.50504"
+         sodipodi:cx="365"
+         id="path4894"
+         style="fill:#ffaaaa;fill-opacity:1;stroke:none"
+         sodipodi:type="arc" />
+    </g>
+    <path
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/chrism/dev/android/Memorizer/android/res/drawable/icon.png"
+       id="path3379"
+       d="m 50.326098,673.8692 -69.652217,0 c -5.086229,0 -9.180882,-4.00947 -9.180882,-8.98982 l 0,-29.03436 c 0,-4.98037 4.094653,-8.98982 9.180882,-8.98982 l 69.652217,0 c 5.086207,0 9.180903,4.00945 9.180903,8.98982 l 0,29.03436 c 0,4.98035 -4.094696,8.98982 -9.180903,8.98982 z"
+       style="color:#000000;fill:url(#pattern3395);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.98599994;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible" />
+    <rect
+       ry="8.9541941"
+       y="-50.500008"
+       x="616.86224"
+       height="85.999931"
+       width="46.999935"
+       id="rect3381"
+       style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00006664;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible"
+       transform="matrix(0,1,-1,0,0,0)"
+       inkscape:export-filename="/home/chrism/dev/android/Memorizer/android/res/drawable/icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <g
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/chrism/dev/android/Memorizer/android/res/drawable/icon.png"
+       transform="matrix(0.89501483,0,0,0.90135955,-14.353774,478.02119)"
+       id="g3383">
+      <path
+         sodipodi:type="arc"
+         style="fill:#ff0000;fill-opacity:1;stroke:none"
+         id="path3385"
+         sodipodi:cx="365.71429"
+         sodipodi:cy="769.50507"
+         sodipodi:rx="137.14285"
+         sodipodi:ry="142.85715"
+         d="m 502.56963,760.25953 c 4.90192,78.73242 -52.39651,146.69702 -127.97962,151.80319 -75.58312,5.10617 -140.82913,-54.5797 -145.73105,-133.31212 -4.90193,-78.73242 52.3965,-146.69702 127.97962,-151.80319 75.2498,-5.08365 140.32319,54.0707 145.673,132.42266"
+         sodipodi:start="6.2184213"
+         sodipodi:end="12.495366"
+         transform="matrix(0.108708,0,0,0.108708,-14.83166,102.2249)"
+         sodipodi:open="true" />
+      <path
+         sodipodi:type="arc"
+         style="fill:#ff0000;fill-opacity:1;stroke:none"
+         id="path3387"
+         sodipodi:cx="365.71429"
+         sodipodi:cy="769.50507"
+         sodipodi:rx="137.14285"
+         sodipodi:ry="257.14285"
+         d="m 228.57328,768.17543 c 0.39164,-142.01418 62.10926,-256.54412 137.85016,-255.80978 75.49248,0.73193 136.47373,115.72552 136.43369,257.2758"
+         sodipodi:start="3.1467635"
+         sodipodi:end="6.2837157"
+         transform="matrix(0.108708,0,0,0.108708,-14.83049,102.34)"
+         sodipodi:open="true" />
+      <text
+         xml:space="preserve"
+         style="font-size:21.74176598px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Densmore"
+         x="18.402042"
+         y="192.78555"
+         id="text3389"
+         sodipodi:linespacing="100%"><tspan
+           sodipodi:role="line"
+           id="tspan3391"
+           x="18.402042"
+           y="192.78555">6</tspan></text>
+      <path
+         sodipodi:type="arc"
+         style="fill:#ffaaaa;fill-opacity:1;stroke:none"
+         id="path3393"
          sodipodi:cx="365"
          sodipodi:cy="264.50504"
          sodipodi:rx="23.571428"
