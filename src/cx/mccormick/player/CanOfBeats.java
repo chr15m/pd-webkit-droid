@@ -81,7 +81,7 @@ public class CanOfBeats extends Activity {
 				space = "";
 			}
 			//post("[" + symbol + "]" + space + msg.toString());
-			Log.e("receiveMessage", "[" + symbol + "]" + space + msg.toString());
+			//Log.e("receiveMessage", "[" + symbol + "]" + space + msg.toString());
 			// dispatch key event
 			/*if (symbol.equals("key")) {
 				int x = ((Float)args[0]).intValue();
