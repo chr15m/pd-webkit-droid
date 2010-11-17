@@ -1,5 +1,6 @@
- * Fix the title page to fit in a smaller area
- * Remove the 'get more games' link or make it work by opening a browser
- * Make the number of cards fit within the screen dimensions
- * put a podsix graphic if there is a hole in the cards
+ * does the front page menu work properly?
+ + Fix the title page to fit in a smaller area
+ + Remove the 'get more games' link or make it work by opening a browser
+ + Make the number of cards fit within the screen dimensions
+ + put a podsix graphic if there is a hole in the cards
  ? get rid of the title bar?
