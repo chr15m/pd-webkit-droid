@@ -1,5 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
+echo "$1"
 if [ "$1" == "" ]
 then
 	device="phone"
@@ -11,5 +12,6 @@ fi
 emulator -avd $device &
 if [ "`pidof adb`" == "" ]
 then
-	adb logcat &
+	killall adb
 fi
+adb logcat &

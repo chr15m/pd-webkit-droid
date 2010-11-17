@@ -1,6 +1,8 @@
- * does the front page menu work properly?
- * high scores
  * fit more columns on the smaller phone
+ * eliminate scrollbars on body (overflow)
+ * does the front page menu work properly?
+ * make front menu fit better (min height)
+ * high scores
  + icon
  + Fix the title page to fit in a smaller area
  + Remove the 'get more games' link or make it work by opening a browser
