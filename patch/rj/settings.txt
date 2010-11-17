@@ -1,2 +1,0 @@
-SOMETAG two 24;
-SOMETAG one 30;

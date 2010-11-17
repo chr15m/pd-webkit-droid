@@ -1,10 +1,5 @@
-android/bin/*
-android/gen/cx/mccormick/littlelooper/*
-android/gen
 bin
-bin
+gen
 build.xml
 local.properties
-gen
-res/raw/patch.zip
 libs
