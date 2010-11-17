@@ -9,7 +9,7 @@ import android.webkit.WebView;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
-import android.os.Environment;
+//import android.os.Environment;
 
 import java.io.FileInputStream;
 import java.io.File;
@@ -38,11 +38,11 @@ public class Memorizer extends Activity
         //mWebView.addJavascriptInterface(new DemoJavaScriptInterface(), "LittleLooperEngine");
         mWebView.loadUrl("file:///android_asset/index.html");
 	
-	File file[] = Environment.getExternalStorageDirectory().listFiles();  
-	System.out.println("***");
-	for (i=0; i< file.length; i++)
-		System.out.println(file[i].getAbsolutePath());
-	System.out.println("***");
+	//File file[] = Environment.getExternalStorageDirectory().listFiles();  
+	//System.out.println("***");
+	//for (i=0; i< file.length; i++)
+	//	System.out.println(file[i].getAbsolutePath());
+	//System.out.println("***");
     }
 
     final class DemoJavaScriptInterface {
