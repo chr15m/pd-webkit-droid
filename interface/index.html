@@ -1,12 +1,16 @@
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="gui.js"></script>
 </head>
-<body>
+<body onLoad="LittleLooperEngine.ping();">
 <div id='container'>
 	<span class='logo'>LittleLooper</span>
 	<div class='page'>
-		<div class='item'><span class='box label'>beats</span><span class='number box'>15</span></div>
+		<div class='item'>
+			<span class='box label'>tick</span>
+			<span id='displaytick' class='number box'>0</span>
+		</div>
 		<span class='text box selected'>square</span>
 	</div>
 </div>
