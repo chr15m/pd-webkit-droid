@@ -35,6 +35,9 @@ import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MenuInflater;
 
 public class CanOfBeats extends Activity {
 
@@ -169,6 +172,36 @@ public class CanOfBeats extends Activity {
 		}
 		PdBase.addToSearchPath(libDir.getAbsolutePath());
 		PdBase.addToSearchPath("/sdcard/" + res.getString(R.string.app_name) + "/patch/");
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		switch (item.getItemId()) {
+			case R.id.about:
+				//newGame();
+				Log.e("menu", "about");
+				js("about()");
+				return true;
+			case R.id.help:
+				//newGame();
+				Log.e("menu", "help");
+				js("help()");
+				return true;
+			case R.id.quit:
+				Log.e("menu", "quit");
+				finish();
+			return true;
+				default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	// this callback makes sure that we handle orientation changes without audio glitches
