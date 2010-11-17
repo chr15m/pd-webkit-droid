@@ -1,6 +1,4 @@
- * integrate mic fix from Peter
- * integrate other fix from Peter
- * turn on mic
+ * make a better icon
  * phone/call interrupt stuff from Peter's code
  * make help and about work all the time
  * upload to project page on mccormick.cx
