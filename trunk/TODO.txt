@@ -1,4 +1,5 @@
  * ticker - start of bar message with javascript ticker
+ * on lose focus, pause timers etc.
  * 'menu' button
    * about
    * license

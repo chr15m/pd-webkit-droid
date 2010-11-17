@@ -54,31 +54,6 @@
 			display: none;
 		}
 
-		#loader {
-			margin-left: auto;
-			margin-right: auto;
-			width: 100px;
-			height: 14px;
-			background: white;
-			top: 30px;
-			position: relative;
-			display: none;
-			padding: 3px;
-			border: 1px solid silver;
-			-webkit-border-radius: 3px;
-			-moz-border-radius: 3px;
-		}
-		
-		div.loaderbit {
-			background: red;
-			width: 16px;
-			height: 10px;
-			margin: 2px;
-			float: left;
-			-webkit-border-radius: 3px;
-			-moz-border-radius: 3px;
-		}
-
 		table {
 			position: absolute;
 			width: 100%;
@@ -92,64 +67,38 @@
 			border: 2px solid gray;
 			text-align: center;
 		}
+		
+		#ticker {
+			position: absolute;
+			border: 2px solid orange;
+			-webkit-border-radius: 3px;
+			-moz-border-radius: 3px;
+			width: 12%;
+			display: none;
+		}
 	</style>
 	<script>
-		var loader = null;
-		var loaderinterval = null;
-		var loadercount = 0;
 		var message = null;
 		var messagecounter = 0;
 		var messageinterval = null;
+		var ticker = null;
+		var tickerinit = false;
 		var synth_row = [];
 		var synth_data = [
 			[0, 0, 0, 0, 0, 0, 0, 0, 0,],
 			[0, 0, 0, 0, 0, 0, 0, 0, 0,]
 		];
-		
-		function startLoader() {
-			if (loader) {
-				loader.style.display = 'block';
-				loaderinterval = setInterval(doLoader, 200);
-			}
-		}
-		
-		function stopLoader() {
-			if (loaderinterval) {
-				clearInterval(loaderinterval);
-				loaderinterval = null;
-			}
-			loader.style.display = 'none';
-		}
-		
-		function doLoader() {
-			if (loader) {
-				for (var l=0; l<loader.children.length; l++) {
-					if ((loadercount - l) % 5) {
-						opacity = 0.25;
-					} else {
-						opacity = 1.0;
-					}
-					loader.children[l].style.opacity = opacity;
-				}
-				loadercount += 1;
-			}
-		}
+		var positions = [];
 		
 		function newMessage(txt) {
 			message.innerHTML = txt;
 			messagecounter = 0.85;
 			message.style.display = "block";
-			messageinterval = setInterval(doMessage, 100);
+			messageinterval = setTimeout(cancelMessage, 1000);
 		}
 		
-		function doMessage() {
-			messagecounter -= 0.05;
-			if (messagecounter > 0) {
-				message.style.opacity = messagecounter;
-			} else {
-				clearInterval(messageinterval);
-				message.style.display = "none";
-			}
+		function cancelMessage() {
+			message.style.display = "none";
 		}
 		
 		var colors = ["white", "red", "blue", "black", "gray"];
@@ -172,22 +121,32 @@
 		}
 		
 		function launch() {
-			loader = document.getElementById("loader");
 			message = document.getElementById("loading");
+			ticker = document.getElementById("ticker");
 			initSynth();
+			var tabletop = document.getElementById("synths").offsetTop;
+			for (var i=0; i<16; i++) {
+				positions[i] = [parseInt(synth_row[Math.floor(i / 8) % 2][i % 8].offsetLeft), parseInt(synth_row[Math.floor(i / 8) % 2][i % 8].offsetTop) + tabletop];
+			}
+			ticker.style.width = parseInt(synth_row[0][3].offsetLeft) + parseInt(synth_row[0][0].offsetWidth) - parseInt(synth_row[0][0].offsetLeft);
+			ticker.style.height = parseInt(synth_row[0][0].offsetHeight);
 		}
 		
 		function PdReceive(what) {
 			if (what == "init") {
 				newMessage("fresh beat!");
-				stopLoader();
 				document.getElementById("buttons").style.display = "block";
-				//Pd.sendBang("startticker");
+				Pd.sendBang("startticker");
 			} else {
 				var parts = what.split(" ");
-				if (parts[0] == "tick") {
-					var tick = parts[1];
-					document.getElementById("ticker").innerHTML = tick;
+				if (parts[0] == "bar") {
+					var tick = parseInt(parts[1]);
+					ticker.style.left = positions[tick * 4][0] - 2;
+					ticker.style.top = positions[tick * 4][1] - 2;
+				}
+				if (!tickerinit) {
+					ticker.style.display = "block";
+					tickerinit = true;
 				}
 			}
 		}
@@ -196,9 +155,8 @@
 
 <body onLoad='launch();' onResize='launch();'>
 	<div id="page" style="border: 0px solid silver; width: 100%; height: 100%; margin: 0px; padding: 0px; overflow: hidden;">
-		<div id='buttons'><button ontouchstart='startLoader(); Pd.sendBang("shake"); this.style.background="red"' ontouchend='this.style.background="#ffaaaa"'>new beat</button></div>
+		<div id='buttons'><button ontouchstart='Pd.sendBang("shake"); this.style.background="red";' ontouchend='this.style.background="#ffaaaa"'>new beat</button></div>
 		<div id='loading'>Loading...</div>
-		<div id='loader'><div class='loaderbit'></div><div class='loaderbit'></div><div class='loaderbit'></div><div class='loaderbit'></div><div class='loaderbit'></div></div>
 		<div id='ticker'></div>
 		<table id="synths">
 			<tr>
