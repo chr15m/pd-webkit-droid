@@ -317,7 +317,7 @@ function TitleScreen(where, callbackID)
 
 function Card(game)
 {
-	this.Init = function(i, c)
+	this.Init = function(x, y, i, c)
 	{
 		this.game = game;
 		this.id = PodSix.RegisterCallback(this);
@@ -325,9 +325,8 @@ function Card(game)
 		this.flipping = false;
 		this.i = i;
 		this.c = c;
-		
-		this.cardX = (c % 3) * 105 + 6;
-		this.cardY = parseInt(c / 3) * 60 + 5;
+		this.cardX = x;
+		this.cardY = y;
 		
 		this.onclick = function(e)
 		{
@@ -409,20 +408,31 @@ function Memorizer(where)
 	this.lastClicked = null;
 	this.numFlipped = 0;
 	this.anim = null;
+	this.cardCount = 24;
 	this.cardWidth = 100;
 	this.cardHeight = 55;
+	this.cardXMargin = 5;
+	this.cardYMargin = 6;
+	this.cardXOffset = 5;
+	this.cardYOffset = 6;
 	this.gameid = PodSix.RegisterCallback(this);
 	this.flipSpeed = 7;
 	this.loadingScreen = null;
 	this.winScreen = null;
 	this.cards = [];
+	this.fieldWidth = 0;
+	this.fieldHeight = 0;
 	
 	this.Launch = function(where)
 	{
+		var boss = document.getElementById(where);
+		this.fieldWidth = parseInt(boss.offsetWidth);
+		this.fieldHeight = parseInt(boss.offsetHeight);
+		
 		field = document.createElement("div");
 		field.style.border = "0px solid black";
-		field.style.width = "320px";
-		field.style.height = "480px";
+		field.style.width = this.fieldWidth;
+		field.style.height = this.fieldHeight;
 		field.style.margin = "0px";
 		field.style.padding = "0px";
 		field.style.backgroundImage = "url(" + i_background + ")";
@@ -431,7 +441,7 @@ function Memorizer(where)
 		field.style.position = "absolute";
 		this.field = field;
 		
-		document.getElementById(where).appendChild(field);
+		boss.appendChild(field);
 		
 		this.winScreen = new WinScreen(field, this);
 		this.titleScreen = new TitleScreen(field, PodSix.RegisterCallback(this));
@@ -465,14 +475,27 @@ function Memorizer(where)
 		card = {};
 		pos = {};
 		
-		// pick 10 cards at random and add them twice
-		for (i = 0; i < 12; i++)
+		// how many cards can we fit on this screen?
+		var horizfit = Math.floor(this.fieldWidth / (this.cardWidth + this.cardXMargin));
+		var vertfit = Math.floor(this.fieldHeight / (this.cardHeight + this.cardYMargin));
+		// make sure we don't have more than 24 cards
+		while ((horizfit * vertfit) > 24) vertfit -= 1;
+		// if we come up with an odd number of cards, we should remove a row
+		if ((horizfit * vertfit) % 2) vertfit -= 1;
+		// calculate the offsets
+		this.cardXOffset = Math.round((this.fieldWidth - (horizfit * (this.cardWidth + this.cardXMargin))) / 2);
+		this.cardYOffset = Math.round((this.fieldHeight - (vertfit * (this.cardHeight + this.cardYMargin))) / 2);
+		// total number of cards in play
+		this.cardCount = horizfit * vertfit;
+		
+		// pick 12 cards at random and add them twice
+		for (i = 0; i < horizfit * vertfit / 2; i++)
 		{
-			do { c = parseInt(Math.random() * 12) } while (card[c]);
+			do { c = parseInt(Math.random() * this.cardCount / 2) } while (card[c]);
 			card[c] = true;
-			do { p = parseInt(Math.random() * 24) } while (pos[p]);
+			do { p = parseInt(Math.random() * this.cardCount) } while (pos[p]);
 			pos[p] = c + 1;
-			do { p = parseInt(Math.random() * 24) } while (pos[p]);
+			do { p = parseInt(Math.random() * this.cardCount) } while (pos[p]);
 			pos[p] = c + 1;
 		}
 		
@@ -482,7 +505,7 @@ function Memorizer(where)
 			//document.createElement("img");
 			this.cards[this.cards.length] = n;
 			PodSix.Inherit(n, new Card(this));
-			n.Init(i, c);
+			n.Init((c % horizfit) * (this.cardWidth + this.cardXMargin) + this.cardXOffset, Math.floor(c / horizfit) * (this.cardHeight + this.cardYMargin) + this.cardYOffset, i, c);
 			n.src = imgs + "cardback.png";
 			n.style.left = n.cardX;
 			n.style.top = n.cardY;
