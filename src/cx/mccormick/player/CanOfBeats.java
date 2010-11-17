@@ -165,7 +165,7 @@ public class CanOfBeats extends Activity {
 		try {
 			IoUtils.extractZipResource(res.openRawResource(R.raw.abstractions), libDir, false);
 			IoUtils.extractZipResource(res.openRawResource(IoUtils.hasArmeabiV7a() ? R.raw.externals_v7a : R.raw.externals), libDir, false);
-			IoUtils.extractZipResource(getResources().openRawResource(R.raw.patch), new File("/sdcard/" + res.getString(R.string.app_name)), false);
+			IoUtils.extractZipResource(getResources().openRawResource(R.raw.patch), new File("/sdcard/" + res.getString(R.string.app_name)), true);
 		} catch (IOException e) {
 			Log.e("Player", e.toString());
 			e.printStackTrace();
