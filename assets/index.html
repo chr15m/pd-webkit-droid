@@ -102,8 +102,8 @@
 		var messageinterval = null;
 		var synth_row = [];
 		var synth_data = [
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+			[0, 0, 0, 0, 0, 0, 0, 0, 0,],
+			[0, 0, 0, 0, 0, 0, 0, 0, 0,]
 		];
 		
 		function startLoader() {
@@ -177,7 +177,7 @@
 			for (var s=0; s<2; s++) {
 				synth_row[s] = document.getElementById('synths').rows[s].cells;
 				for (var i=0; i<synth_row[s].length; i++) {
-					console.log(synth_row[s][i]);
+					//console.log(synth_row[s][i]);
 					synth_row[s][i].innerHTML = "&nbsp;";
 					synth_row[s][i].onmousedown = generateMousedown(i, "synth", s, synth_data[s]);
 				}
@@ -215,24 +215,8 @@
 				<td></td>
 				<td></td>
 				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
 			</tr>
 			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
 				<td></td>
 				<td></td>
 				<td></td>

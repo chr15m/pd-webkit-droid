@@ -1,0 +1,9 @@
+# to make the ant build files
+./setup-build.sh
+
+# to pach the Pd patches into a zip file
+./pack-patch.sh
+
+# to generate a release key
+./generate-key.sh
+
