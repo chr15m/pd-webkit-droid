@@ -15,32 +15,6 @@
 			font-size: 16px;
 		}
 		
-		#kaos {
-			background-repeat: no-repeat;
-			background-position: center center;
-			background-size: 100% 100% round;
-			background-image: url(acidwhirl.png);
-			position: absolute;
-			height: 50%;
-			left: 3px;
-			top: 37px;
-			border: 1px solid black;
-			-webkit-border-radius: 3px;
-			-moz-border-radius: 3px;
-		}
-		
-		#kaostouch {
-			position: absolute;
-			z-index: 100;
-		}
-		
-		#flask {
-			position: absolute;
-			top: 60px;
-			left: 20px;
-			opacity: 0.7;
-		}
-		
 		#page {
 			width: 100%;
 			height: 100%;
@@ -82,6 +56,11 @@
 			z-index: 100;
 		}
 		
+		#files {
+			width: 100%;
+			text-align: center;
+		}
+		
 		button {
 			text-align: center;
 			background: #ffffff;
@@ -98,35 +77,10 @@
 			width: 30%;
 		}
 		
-		.speakerbutton {
-			position: absolute;
-			right: 3px;
-			width: 32px;
-		}
-		
-		.gimmebutton {
-			position: absolute;
-			left: 3px;
-			float: left;
-		}
-		
-		.buttonline {
-			height: 35px;
-		}
-		
-		#record {
-			position: absolute;
-			width: 20%;
-			right: 3px;
-			top: 0px;
-		}
-		
-		#buttons {
-			position: absolute;
-			bottom: 3px;
-			width: 100%;
-			text-align: center;
-			display: none;
+		button.file {
+			width: 90%;
+			margin-left: auto;
+			margin-right: auto;
 		}
 		
 		#about, #help {
@@ -185,135 +139,44 @@
 			}
 		}
 		
-		var message = null;
-		var messagecounter = 0;
-		var messageinterval = null;
-		var record = false;
-		var recordicon = null;
-		var speakers = {"acid": true, "beats": true};
-		var speakerimages = {"acid": null, "beats": null};
-		var kaostouch = null;
-		
-		function newMessage(txt) {
-			message.innerHTML = txt;
-			messagecounter = 0.85;
-			message.style.display = "block";
-			messageinterval = setTimeout(cancelMessage, 3000);
-		}
-		
-		function cancelMessage() {
-			message.style.display = "none";
-		}
-		
-		function speaker(which) {
-			speakers[which] = !speakers[which];
-			send("speaker", which + " " + (1 * speakers[which]));
-			if (speakers[which]) {
-				speakerimages[which].src = "speaker.png";
-			} else {
-				speakerimages[which].src = "speaker-cancel.png";
-			}
-		}
-		
 		function launch() {
-			message = document.getElementById("loading");
-			recordicon = document.getElementById("recordicon");
-			speakerimages["acid"] = document.getElementById("acid_speaker");
-			speakerimages["beats"] = document.getElementById("beats_speaker");
-			var kaos = document.getElementById("kaos");
-			kaos.style.width = parseInt(window.innerWidth) - 8;
-			kaos.style.height = parseInt(window.innerHeight) - 111;
-			kaostouch = document.getElementById("kaostouch");
-			kaostouch.style.width = parseInt(kaos.offsetWidth) - 3;
-			kaostouch.style.height = parseInt(kaos.offsetHeight) - 3;
-			kaostouch.style.top = kaos.offsetTop;
-			kaostouch.style.left = kaos.offsetLeft;
-			//kaostouch.style.border = "1px solid red";
-			document.getElementById("help").style.width = parseInt(window.innerWidth) - 20;
-			document.getElementById("about").style.width = parseInt(window.innerWidth) - 20;
-			document.getElementById("help").style.minHeight = parseInt(window.innerHeight) - 20;
-			document.getElementById("about").style.minHeight = parseInt(window.innerHeight) - 20;
-			for (var s in {"gimmeacid": true, "gimmebeats": true}) {
-				document.getElementById(s).style.width = parseInt(window.innerWidth) - 40;
+			Pd.requestfiles();
+		}
+		
+		function files() {
+			alert(arguments.length);
+			var filelist = document.getElementById("files");
+			for (a=0; a<arguments.length - 1; a++) {
+				var bits = arguments[a].split("/");
+				var filename = bits[bits.length - 1];
+				filelist.innerHTML += "<p><button class='file' onclick='Pd.load(\"" + arguments[a] + "\");'>" + filename + "</button></p>";
 			}
-		}
-		
-		function togglerecord() {
-			if (record) {
-				// stop recording
-				recordicon.src = "record.png";
-				record = false;
-				send("stop", "bang");
-				alert("recorded to sdcard/GarageAcidLab");
-			} else {
-				// start recording
-				recordicon.src = "stop.png";
-				record = true;
-				send("record", "bang");
-				alert("recording to sdcard/GarageAcidLab");
-			}
-		}
-		
-		function PdReceive(what) {
-			if (what == "init") {
-				newMessage("acid time!");
-				document.getElementById("loading-container").style.display = "none";
-				document.getElementById("buttons").style.display = "block";
-			} else if (what == "newbeats") {
-				newMessage("fresh beat!");
-			} else if (what == "newacid") {
-				newMessage("fresh acid!");
-			}
-		}
-		
-		function buttonOn(which) {
-			which.style.backgroundColor = "red";
-		}
-		
-		function buttonOff(which) {
-			which.style.backgroundColor = "white";
-		}
-		
-		function kaosdo(event) {
-			var touch = event.touches[0];
-			var x = (touch.clientX - parseInt(kaostouch.offsetLeft)) / parseInt(kaostouch.offsetWidth);
-			var y = (touch.clientY - parseInt(kaostouch.offsetTop)) / parseInt(kaostouch.offsetHeight);
-			send("kaos", x + " " + y);
+			document.getElementById('loading-container').style.visibility = "hidden";
+			document.getElementById('loading').style.visibility = "hidden";
 		}
 	</script>
 </head>
 
 <body onLoad='launch();' onResize='launch();'>
 	<div id="page">
-		<div id='kaostouch' onmousedown='kaosdo(event);' ontouchstart='kaosdo(event);' ontouchmove='kaosdo(event);'></div>
-		<img src='acidwhirl.png' id='kaos'>
-		<img src='bubbleflask.png' id='flask'>
 		<div id='loading-container'></div>
 		<div id='loading'>Loading...</div>
-		<button id='record' ontouchstart='togglerecord(); buttonOn(this);' ontouchend='buttonOff(this);'><img src='record.png' id='recordicon'></button>
-		<div id='buttons'>
-			<div id='acid' class='buttonline'>
-				<button ontouchstart='buttonOn(this); sendBang("newacid");' ontouchend='buttonOff(this);' class='gimmebutton' id='gimmeacid'>gimme acid</button>
-				<button ontouchstart='buttonOn(this); speaker("acid");' ontouchend='buttonOff(this);' class='speakerbutton'><img src='speaker.png' id='acid_speaker'></button>
-			</div>
-			<div id='drums' class='buttonline'>
-				<button ontouchstart='buttonOn(this); sendBang("newbeats");' ontouchend='buttonOff(this);' class='gimmebutton' id='gimmebeats'>gimme beats</button>
-				<button ontouchstart='buttonOn(this); speaker("beats");' ontouchend='buttonOff(this);' class='speakerbutton'><img src='speaker.png' id='beats_speaker'></button>
-			</div>
+		<div id='files'>
+			<p><strong>Projects:</strong></p>
 		</div>
 	</div>
 	<div id="help">
 		<h3>Help</h3>
-		<p>GarageAcidLab is a rave in your pocket. Press the 'gimme acid' button to generate a completely original 303 melody. Press the 'gimme beats' button to generate an original garage beat. Dragging your finger across the central acid area will apply effects to 303 sound. The speaker buttons cut the sound to the beat and acid selectively, and the record button in the top right hand corner will make a recording of what you can hear on the sdcard in the GarageAcidLab folder. Have fun!</p>
+		<p>PdWebKit lets you play your Pure Data patches on Android devices with custom interfaces built in HTML and Javascript. See [the documentation](http://mccormick.cx/projects/PdWebKit/) for instructions on how to build an interface for your patch and get it running on your device.</p>
 		<button class='info' onclick='document.getElementById("help").style.display = "none";'>Ok</button>
 	</div>
 	<div id="about">
 		<a href='http://podsix.com.au/'><img src='podsix.png' class='logo'></a>
-		<p>GarageAcidLab is copyright Chris McCormick, 2009, 2010.</p>
-		<p>This program is GPLv3 licensed. A copy of the LICENSE.txt is available online <a href='http://mccormick.cx/projects/GarageAcidLab/LICENSE.txt'>here</a>.</p>
-		<p>Obtain the sourcecode with bzr:<br/><code>bzr co http://mccormick.cx/dev/GarageAcidLab-android/</code></p>
+		<p>PdWebKit is copyright Chris McCormick, 2009, 2010.</p>
+		<p>This program is GPLv3 licensed. A copy of the LICENSE.txt is available online <a href='http://mccormick.cx/projects/PdWebKit/LICENSE.txt'>here</a>.</p>
+		<p>Obtain the sourcecode with bzr:<br/><code>bzr co http://mccormick.cx/dev/PdWebKit/</code></p>
 		<h3>Pure Data</h3>
-		<p>This program contains Pure Data by Miller S. Puckette, and pd-for-android by Peter Brinkmann. These are BSD licensed. See the file called LICENSE.txt for details. A copy of that file is available online <a href='http://mccormick.cx/projects/GarageAcidLab/LICENSE.txt'>here</a>.</p>
+		<p>This program contains Pure Data by Miller S. Puckette, and pd-for-android by Peter Brinkmann. These are BSD licensed. See the file called LICENSE.txt for details. A copy of that file is available online <a href='http://mccormick.cx/projects/PdWebKit/LICENSE.txt'>here</a>.</p>
 		<button class='info' onclick='document.getElementById("about").style.display = "none";'>Ok</button>
 	</div>
 </body>
