@@ -1,3 +1,3 @@
- * button coloring
- * hook up kaospad
- * make acid work
+ * when record is pressed, throw up a message to the user?
+ * drum-fill button?
+ * make info buttons wider 
