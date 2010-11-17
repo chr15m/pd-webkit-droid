@@ -140,13 +140,11 @@ public class CanOfBeats extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		post("pause");
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		post("resume");
 	}
 
 	@Override

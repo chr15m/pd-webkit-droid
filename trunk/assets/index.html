@@ -207,7 +207,7 @@
 
 <body onLoad='launch();' onResize='launch();'>
 	<div id="page" style="border: 0px solid silver; width: 100%; height: 100%; margin: 0px; padding: 0px; overflow: hidden;">
-		<div id='buttons'><button ontouchstart='startLoader(); Pd.sendBang("shake");'>new beat</button></div>
+		<div id='buttons'><button ontouchstart='startLoader(); Pd.sendBang("shake"); this.style.background="red"' ontouchend='this.style.background="#ffaaaa"'>new beat</button></div>
 		<div id='loading'>Loading...</div>
 		<div id='loader'><div class='loaderbit'></div><div class='loaderbit'></div><div class='loaderbit'></div><div class='loaderbit'></div><div class='loaderbit'></div></div>
 		<table id="synths">
