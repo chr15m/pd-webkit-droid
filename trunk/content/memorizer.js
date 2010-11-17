@@ -23,11 +23,6 @@ else
         imgs = "images/";
 }
 
-// stop heaps of images reloading every time, jerks
-try {
-	document.execCommand("BackgroundImageCache", false, true);
-} catch(err) {}
-
 GetImageUrl = _IG_GetImageUrl;
 
 body = document.body;
@@ -221,8 +216,8 @@ function TitleScreen(where, callbackID)
 	this.id = PodSix.RegisterCallback(this);
 	
 	var repr = MakeDiv(where);
-	repr.style.width = where.style.width;
-	repr.style.height = where.style.height;
+	repr.style.width = window.innerWidth;
+	repr.style.height = window.innerHeight;
 	repr.style.backgroundColor = "#ffffff";
 	repr.style.backgroundImage = "url(" + i_title + ")";
 	repr.style.backgroundRepeat = "no-repeat";
@@ -292,8 +287,8 @@ function TitleScreen(where, callbackID)
 				// start a fresh game
 				PodSix.callback[t.boss.callbackID].Main();
 				//PodSix.callback[t.boss.callbackID].ad.style.visibility = "hidden !important";
-				PodSix.callback[t.boss.callbackID].ad.style.visibility = "hidden";
-				PodSix.callback[t.boss.callbackID].ad.style.display = "none";
+				//PodSix.callback[t.boss.callbackID].ad.style.visibility = "hidden";
+				//PodSix.callback[t.boss.callbackID].ad.style.display = "none";
 			}
 		}
 		else
@@ -451,10 +446,10 @@ function Memorizer(where)
 		this.winScreen = new WinScreen(field, this);
 		this.titleScreen = new TitleScreen(field, PodSix.RegisterCallback(this));
 		
-		this.loadingScreen = new Loading(field, preloadList);
-		this.loadingScreen.StartCheck(this);
+		//this.loadingScreen = new Loading(field, preloadList);
+		//this.loadingScreen.StartCheck(this);
 		
-		this.ad = document.getElementById("memorizerAd");
+		//this.ad = document.getElementById("memorizerAd");
 		//this.ad.style.top = parseInt(field.offsetTop) + 150;
 		//this.ad.style.position = "absolute";
 		//this.ad.style.left = parseInt(field.offsetLeft) + parseInt(field.offsetWidth) / 2 - this.ad.offsetWidth / 2;
@@ -464,8 +459,8 @@ function Memorizer(where)
 	this.ShowTitle = function()
 	{
 		this.titleScreen.Show();
-		this.ad.style.visibility = "visible";
-		this.ad.style.display = "inline";
+		//this.ad.style.visibility = "visible";
+		//this.ad.style.display = "inline";
 	}
 	
 	this.Main = function()

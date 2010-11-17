@@ -17,9 +17,15 @@
 			overflow: hidden;
 		}
 	</style>
+	<script>
+		var m = null;
+		function launchGame() {
+			if (parseInt(window.innerWidth) && !m) { m = new Memorizer("page"); }
+		}
+	</script>
 </head>
 
-<body onLoad='var m = new Memorizer("page");'>
+<body onLoad='launchGame();' onResize='launchGame();'>
 	<div id="page" style="border: 0px solid silver; width: 100%; height: 100%; margin: 0px; padding: 0px; overflow: hidden;"></div>
 </body>
 
