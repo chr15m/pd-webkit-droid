@@ -1,0 +1,249 @@
+<html>
+
+<head>
+	<style>
+		* {
+			-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+		}
+		
+		body {
+			margin: 0px;
+			padding: 0px;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-image: url(background.png);
+			font-family: Arial;
+		}
+		
+		#loading {
+			text-align: center;
+			margin-top: 10px;
+			background: #ffffff;
+			opacity: 0.8;
+			padding: 3px;
+			width: 35%;
+			border: 1px solid silver;
+			margin-left: auto;
+			margin-right: auto;
+			-webkit-border-radius: 3px;
+			-moz-border-radius: 3px;
+		}
+		
+		button {
+			text-align: center;
+			margin-top: 20px;
+			background: #ffaaaa;
+			opacity: 0.8;
+			padding: 3px;
+			width: 35%;
+			border: 1px solid black;
+			margin-left: auto;
+			margin-right: auto;
+			-webkit-border-radius: 3px;
+			-moz-border-radius: 3px;
+		}
+
+		#buttons {
+			position: absolute;
+			top: 20px;
+			width: 100%;
+			text-align: center;
+			display: none;
+		}
+
+		#loader {
+			margin-left: auto;
+			margin-right: auto;
+			width: 100px;
+			height: 14px;
+			background: white;
+			top: 30px;
+			position: relative;
+			display: none;
+			padding: 3px;
+			border: 1px solid silver;
+			-webkit-border-radius: 3px;
+			-moz-border-radius: 3px;
+		}
+		
+		div.loaderbit {
+			background: red;
+			width: 16px;
+			height: 10px;
+			margin: 2px;
+			float: left;
+			-webkit-border-radius: 3px;
+			-moz-border-radius: 3px;
+		}
+
+		table {
+			position: absolute;
+			width: 100%;
+			bottom: 5px;
+		}
+		
+		td {
+			-webkit-border-radius: 3px;
+			-moz-border-radius: 3px;
+			padding: 2px;
+			border: 2px solid gray;
+			text-align: center;
+		}
+	</style>
+	<script>
+		var loader = null;
+		var loaderinterval = null;
+		var loadercount = 0;
+		var message = null;
+		var messagecounter = 0;
+		var messageinterval = null;
+		var synth_row = [];
+		var synth_data = [
+			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+		];
+		
+		function startLoader() {
+			if (loader) {
+				loader.style.display = 'block';
+				loaderinterval = setInterval(doLoader, 200);
+			}
+		}
+		
+		function stopLoader() {
+			if (loaderinterval) {
+				clearInterval(loaderinterval);
+				loaderinterval = null;
+			}
+			loader.style.display = 'none';
+		}
+		
+		function doLoader() {
+			if (loader) {
+				for (var l=0; l<loader.children.length; l++) {
+					if ((loadercount - l) % 5) {
+						opacity = 0.25;
+					} else {
+						opacity = 1.0;
+					}
+					console.log(opacity);
+					loader.children[l].style.opacity = opacity;
+				}
+				loadercount += 1;
+			}
+		}
+		
+		function newMessage(txt) {
+			message.innerHTML = txt;
+			messagecounter = 0.85;
+			message.style.display = "block";
+			messageinterval = setInterval(doMessage, 100);
+		}
+		
+		function doMessage() {
+			messagecounter -= 0.05;
+			if (messagecounter > 0) {
+				message.style.opacity = messagecounter;
+			} else {
+				clearInterval(messageinterval);
+				message.style.display = "none";
+			}
+		}
+		
+		function dec2hex(i)
+		{
+			var result = "00";
+			if      (i >= 0    && i <= 15)    { result = "0" + i.toString(16); }
+			//else if (i >= 16   && i <= 255)   { result = "00"  + i.toString(16); }
+			//else if (i >= 256  && i <= 4095)  { result = "0"   + i.toString(16); }
+			//else if (i >= 4096 && i <= 65535) { result =         i.toString(16); }
+			else { result = i.toString(16); }
+			return result;
+		}
+
+		function generateMousedown(idx, name, id, data) {
+			return function(ev) {
+				data[idx] = (data[idx] + 1) % 5;
+				var clr = dec2hex((5  - data[idx]) / 5 * 255);
+				this.style.backgroundColor = "#ff" + clr + clr ;
+				Pd.send(name, id + " " + idx + " " + data[idx]);
+			}
+		}
+
+		function initSynth() {
+			for (var s=0; s<2; s++) {
+				synth_row[s] = document.getElementById('synths').rows[s].cells;
+				for (var i=0; i<synth_row[s].length; i++) {
+					console.log(synth_row[s][i]);
+					synth_row[s][i].innerHTML = "&nbsp;";
+					synth_row[s][i].onmousedown = generateMousedown(i, "synth", s, synth_data[s]);
+				}
+			}
+		}
+		
+		function launch() {
+			loader = document.getElementById("loader");
+			message = document.getElementById("loading");
+			initSynth();
+		}
+		
+		function PdReceive(what) {
+			if (what == "init") {
+				newMessage("fresh beat!");
+				stopLoader();
+				document.getElementById("buttons").style.display = "block";
+			}
+		}
+	</script>
+</head>
+
+<body onLoad='launch();' onResize='launch();'>
+	<div id="page" style="border: 0px solid silver; width: 100%; height: 100%; margin: 0px; padding: 0px; overflow: hidden;">
+		<div id='buttons'><button onclick='startLoader(); Pd.sendBang("shake");'>new beat</button></div>
+		<div id='loading'>Loading...</div>
+		<div id='loader'><div class='loaderbit'></div><div class='loaderbit'></div><div class='loaderbit'></div><div class='loaderbit'></div><div class='loaderbit'></div></div>
+		<table id="synths">
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
+	</div>
+</body>
+
+</html>
