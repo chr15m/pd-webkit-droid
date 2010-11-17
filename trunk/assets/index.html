@@ -11,11 +11,29 @@
 			padding: 0px;
 			width: 100%;
 			height: 100%;
-			background-repeat: no-repeat;
-			background-position: center center;
-			background-image: url(background.png);
 			font-family: Arial;
 			font-size: 16px;
+		}
+		
+		#kaos {
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-size: 100% 100% round;
+			background-image: url(acidwhirl.png);
+			position: absolute;
+			height: 50%;
+			left: 3px;
+			top: 37px;
+			border: 1px solid black;
+			-webkit-border-radius: 3px;
+			-moz-border-radius: 3px;
+		}
+		
+		#flask {
+			position: absolute;
+			top: 60px;
+			left: 20px;
+			opacity: 0.7;
 		}
 		
 		#page {
@@ -29,11 +47,12 @@
 		#loading {
 			position: relative;
 			text-align: center;
-			margin-top: 10px;
+			margin-top: 3px;
 			background: #ffffff;
 			opacity: 0.8;
 			padding: 3px;
 			width: 35%;
+			height: 24px;
 			border: 1px solid silver;
 			margin-left: auto;
 			margin-right: auto;
@@ -60,60 +79,43 @@
 		
 		button {
 			text-align: center;
-			margin-top: 20px;
-			background: #ffaaaa;
-			opacity: 0.8;
+			background: #ffffff;
 			padding: 3px;
-			width: 35%;
+			margin: 3px;
 			border: 1px solid black;
-			margin-left: auto;
-			margin-right: auto;
+			height: 32px;
 			-webkit-border-radius: 3px;
 			-moz-border-radius: 3px;
 		}
 		
-		#clear {
+		.speakerbutton {
 			position: absolute;
-			width: 20%;
 			right: 3px;
-			bottom: 70px;
+			width: 32px;
+		}
+		
+		.gimmebutton {
+			position: absolute;
+			left: 3px;
+			float: left;
+		}
+		
+		.buttonline {
+			height: 35px;
 		}
 		
 		#record {
 			position: absolute;
 			width: 20%;
-			left: 3px;
-			bottom: 70px;
+			right: 3px;
+			top: 0px;
 		}
 		
 		#buttons {
 			position: absolute;
-			top: 20px;
+			bottom: 3px;
 			width: 100%;
 			text-align: center;
-			display: none;
-		}
-
-		table {
-			position: absolute;
-			width: 100%;
-			bottom: 5px;
-		}
-		
-		td {
-			-webkit-border-radius: 3px;
-			-moz-border-radius: 3px;
-			padding: 2px;
-			border: 2px solid gray;
-			text-align: center;
-		}
-		
-		#ticker {
-			position: absolute;
-			border: 2px solid orange;
-			-webkit-border-radius: 3px;
-			-moz-border-radius: 3px;
-			width: 12%;
 			display: none;
 		}
 		
@@ -156,19 +158,30 @@
 			document.getElementById("about").style.display = "block";
 		}
 		
+		function send(receiver, message) {
+			if (typeof(Pd) != "undefined") {
+				Pd.send(receiver, message);
+			} else {
+				console.log(receiver + ": " + message);
+			}
+		}
+		
+		function sendBang(receiver) {
+			if (typeof(Pd) != "undefined") {
+				Pd.sendBang(receiver);
+			} else {
+				console.log(receiver + ": bang");
+			}
+		}
+		
 		var message = null;
 		var messagecounter = 0;
 		var messageinterval = null;
-		var ticker = null;
-		var tickerinit = false;
-		var synth_row = [];
-		var synth_data = [
-			[0, 0, 0, 0, 0, 0, 0, 0, 0,],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0,]
-		];
-		var positions = [];
 		var record = false;
 		var recordicon = null;
+		var speakers = {"acid": true, "beats": true};
+		var speakerimages = {"acid": null, "beats": null};
+		var kaos = null;
 		
 		function newMessage(txt) {
 			message.innerHTML = txt;
@@ -181,49 +194,30 @@
 			message.style.display = "none";
 		}
 		
-		var colors = ["#FFFFFF", "#2B0000", "#800000", "#D40000", "#FF0000"];
-		function generateMousedown(idx, name, id, data) {
-			return function(ev) {
-				data[idx] = (data[idx] + 1) % 5;
-				this.style.backgroundColor = colors[data[idx]];
-				Pd.send(name, id + " " + idx + " " + data[idx]);
-			}
-		}
-
-		function initSynth() {
-			for (var s=0; s<2; s++) {
-				synth_row[s] = document.getElementById('synths').rows[s].cells;
-				for (var i=0; i<synth_row[s].length; i++) {
-					synth_row[s][i].innerHTML = "&nbsp;";
-					synth_row[s][i].ontouchstart = generateMousedown(i, "synth", s, synth_data[s]);
-				}
+		function speaker(which) {
+			speakers[which] = !speakers[which];
+			send("speaker", which + " " + speakers[which]);
+			if (speakers[which]) {
+				speakerimages[which].src = "speaker.png";
+			} else {
+				speakerimages[which].src = "speaker-cancel.png";
 			}
 		}
 		
 		function launch() {
 			message = document.getElementById("loading");
-			ticker = document.getElementById("ticker");
 			recordicon = document.getElementById("recordicon");
-			initSynth();
-			var tabletop = parseInt(document.getElementById("synths").offsetTop);
-			for (var i=0; i<16; i++) {
-				positions[i] = [parseInt(synth_row[Math.floor(i / 8) % 2][i % 8].offsetLeft), parseInt(synth_row[Math.floor(i / 8) % 2][i % 8].offsetTop) + tabletop];
-			}
-			ticker.style.width = parseInt(synth_row[0][3].offsetLeft) + parseInt(synth_row[0][0].offsetWidth) - parseInt(synth_row[0][0].offsetLeft);
-			ticker.style.height = parseInt(synth_row[0][0].offsetHeight);
+			speakerimages["acid"] = document.getElementById("acid_speaker");
+			speakerimages["beats"] = document.getElementById("beats_speaker");
+			kaos = document.getElementById("kaos");
+			kaos.style.width = parseInt(window.innerWidth) - 8;
+			kaos.style.height = parseInt(window.innerHeight) - 111;
 			document.getElementById("help").style.width = parseInt(window.innerWidth) - 20;
 			document.getElementById("about").style.width = parseInt(window.innerWidth) - 20;
 			document.getElementById("help").style.minHeight = parseInt(window.innerHeight) - 20;
 			document.getElementById("about").style.minHeight = parseInt(window.innerHeight) - 20;
-			//document.getElementById("body").style.width = window.innerWidth;
-			//document.getElementById("page").style.width = window.innerWidth;
-		}
-		
-		function clearsynth() {
-			for (var i=0; i<16; i++) {
-				synth_row[Math.floor(i / 8)][i % 8].style.backgroundColor = colors[0];
-				Pd.send("synth", Math.floor(i / 8) + " " + (i % 8) + " 0");
-				synth_data[Math.floor(i / 8)][i % 8] = 0;
+			for (var s in {"gimmeacid": true, "gimmebeats": true}) {
+				document.getElementById(s).style.width = parseInt(window.innerWidth) - 40;
 			}
 		}
 		
@@ -232,32 +226,20 @@
 				// stop recording
 				recordicon.src = "record.png";
 				record = false;
-				Pd.send("stop", "bang");
+				send("stop", "bang");
 			} else {
 				// start recording
 				recordicon.src = "stop.png";
 				record = true;
-				Pd.send("record", "bang");
+				send("record", "bang");
 			}
 		}
 		
 		function PdReceive(what) {
 			if (what == "init") {
-				newMessage("fresh beat!");
+				//newMessage("fresh beat!");
 				document.getElementById("loading-container").style.display = "none";
 				document.getElementById("buttons").style.display = "block";
-				Pd.sendBang("startticker");
-			} else {
-				var parts = what.split(" ");
-				if (parts[0] == "bar") {
-					var tick = parseInt(parts[1]);
-					ticker.style.left = positions[tick * 4][0] - 2;
-					ticker.style.top = positions[tick * 4][1] - 2;
-					if (!tickerinit) {
-						ticker.style.display = "block";
-						tickerinit = true;
-					}
-				}
 			}
 		}
 	</script>
@@ -265,34 +247,21 @@
 
 <body onLoad='launch();' onResize='launch();'>
 	<div id="page">
-		<div id='buttons'><button ontouchstart='Pd.sendBang("shake"); this.style.background="red";' ontouchend='this.style.background="#ffaaaa"'>new beat</button></div>
+		<img src='acidwhirl.png' id='kaos'>
+		<img src='bubbleflask.png' id='flask'>
 		<div id='loading-container'></div>
 		<div id='loading'>Loading...</div>
-		<div id='ticker'></div>
-		<button id='clear' onclick='clearsynth();'><img src='close.png'></button>
 		<button id='record' onclick='togglerecord();'><img src='record.png' id='recordicon'></button>
-		<table id="synths">
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-		</table>
+		<div id='buttons'>
+			<div id='acid' class='buttonline'>
+				<button onclick='sendBang("newacid");' ontouchend='' class='gimmebutton' id='gimmeacid'>gimme acid</button>
+				<button onclick='speaker("acid");' ontouchend='' class='speakerbutton'><img src='speaker.png' id='acid_speaker'></button>
+			</div>
+			<div id='drums' class='buttonline'>
+				<button onclick='sendBang("newbeats");' ontouchend='' class='gimmebutton' id='gimmebeats'>gimme beats</button>
+				<button onclick='speaker("beats");' ontouchend='' class='speakerbutton'><img src='speaker.png' id='beats_speaker'></button>
+			</div>
+		</div>
 	</div>
 	<div id="help">
 		<h3>Help</h3>
@@ -301,9 +270,9 @@
 	</div>
 	<div id="about">
 		<a href='http://podsix.com.au/'><img src='podsix.png' class='logo'></a>
-		<p>CanOfBeats is copyright Chris McCormick, 2009, 2010.</p>
-		<p>This program is GPLv3 licensed. A copy of the LICENSE.txt is available online <a href='http://mccormick.cx/projects/CanOfBeats/LICENSE.txt'>here</a>.</p>
-		<p>Obtain the sourcecode with bzr:<br/><code>bzr co http://mccormick.cx/dev/CanOfBeats-Android.bzr/</code></p>
+		<p>GarageAcidLab is copyright Chris McCormick, 2009, 2010.</p>
+		<p>This program is GPLv3 licensed. A copy of the LICENSE.txt is available online <a href='http://mccormick.cx/projects/GarageAcidLab/LICENSE.txt'>here</a>.</p>
+		<p>Obtain the sourcecode with bzr:<br/><code>bzr co http://mccormick.cx/dev/GarageAcidLab/</code></p>
 		<h3>Pure Data</h3>
 		<p>This program contains Pure Data by Miller S. Puckette, and pd-for-android by Peter Brinkmann. These are BSD licensed. See the file called LICENSE.txt for details. A copy of that file is available online <a href='http://mccormick.cx/projects/CanOfBeats/LICENSE.txt'>here</a>.</p>
 		<button onclick='document.getElementById("about").style.display = "none";'>Ok</button>
