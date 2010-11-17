@@ -164,11 +164,13 @@
 			return result;
 		}
 
+		var colors = ["white", "red", "blue", "black", "gray"];
 		function generateMousedown(idx, name, id, data) {
 			return function(ev) {
 				data[idx] = (data[idx] + 1) % 5;
-				var clr = dec2hex((5  - data[idx]) / 5 * 255);
-				this.style.backgroundColor = "#ff" + clr + clr ;
+				//var clr = dec2hex((5  - data[idx]) / 5 * 255);
+				//var clr = colors[data[idx]];
+				this.style.backgroundColor = colors[data[idx]];
 				Pd.send(name, id + " " + idx + " " + data[idx]);
 			}
 		}
