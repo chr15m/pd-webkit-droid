@@ -45,6 +45,7 @@ public class PdWebKit extends Activity {
 	private PdService pdService = null;
 	private String patch;
 	private WebView mWebView;
+	private final PdWebKit that = this;
 
 	private final PdDispatcher dispatcher = new PdDispatcher() {
 		@Override
@@ -138,7 +139,6 @@ public class PdWebKit extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		final ProgressDialog pd = new ProgressDialog(PdWebKit.this);
-		final PdWebKit that = this;
 		super.onCreate(savedInstanceState);
 		Timer t = new Timer(); 
 		pd.setMessage("Loading. Please wait...");
@@ -151,7 +151,6 @@ public class PdWebKit extends Activity {
 				handler.post(new Runnable() {
 					public void run() {
 						unpackResources();
-						bindService(new Intent(that, PdService.class), serviceConnection, BIND_AUTO_CREATE);
 						pd.dismiss();
 					}
 				});
@@ -165,13 +164,13 @@ public class PdWebKit extends Activity {
 		try {
 			IoUtils.extractZipResource(res.openRawResource(R.raw.abstractions), libDir, false);
 			IoUtils.extractZipResource(res.openRawResource(IoUtils.hasArmeabiV7a() ? R.raw.externals_v7a : R.raw.externals), libDir, false);
-			IoUtils.extractZipResource(getResources().openRawResource(R.raw.patch), new File("/sdcard/" + res.getString(R.string.app_name)), true);
+			//IoUtils.extractZipResource(getResources().openRawResource(R.raw.patch), new File("/sdcard/" + res.getString(R.string.app_name)), true);
 		} catch (IOException e) {
 			Log.e("Player", e.toString());
 			e.printStackTrace();
 		}
 		PdBase.addToSearchPath(libDir.getAbsolutePath());
-		PdBase.addToSearchPath("/sdcard/" + res.getString(R.string.app_name) + "/patch/");
+		//PdBase.addToSearchPath("/sdcard/" + res.getString(R.string.app_name) + "/patch/");
 	}
 
 	@Override
@@ -276,7 +275,7 @@ public class PdWebKit extends Activity {
 		public void send(String dest, String s) {
 			List<Object> list = new ArrayList<Object>();
 			String[] bits = s.split(" ");
-					
+			
 			for (int i=0; i < bits.length; i++) {
 				try {
 					list.add(Float.parseFloat(bits[i]));
@@ -291,6 +290,30 @@ public class PdWebKit extends Activity {
 		
 		public void sendBang(String s) {
 			PdBase.sendBang(s);
+		}
+		
+		public void requestfiles() {
+			StringBuffer msg = new StringBuffer();
+			msg.append("'");
+			List<File> list = IoUtils.find(new File("/sdcard"), ".*\\.wpd$");
+			for (File dir: list) {
+				// scenes.put(dir.getName(), dir.getAbsolutePath());
+				msg.append(dir.getAbsolutePath().toString() + "', '");
+			}
+			msg.append("'");
+			js("files(" + msg + ")");
+		}
+		
+		public void load(String path) {
+			post(path);
+			Resources res = getResources();
+			try {
+				patch = PdUtils.openPatch(path + "/_main.pd");
+			} catch (IOException e) {
+				post(e.toString() + "; exiting now");
+				finish();
+			}
+			bindService(new Intent(that, PdService.class), serviceConnection, BIND_AUTO_CREATE);
 		}
 	}
 	
@@ -309,18 +332,16 @@ public class PdWebKit extends Activity {
 
 	private void initPd() {
 		Resources res = getResources();
-		String path = new String("/sdcard/" + res.getString(R.string.app_name) + "/patch/_main.pd");
 		PdBase.setReceiver(dispatcher);
 		dispatcher.addListener("webkit", webkitListener);
+		String name = res.getString(R.string.app_name);
 		try {
-			patch = PdUtils.openPatch(path);
-			String name = res.getString(R.string.app_name);
 			pdService.initAudio(22050, 0, 2, -1);   // negative values are replaced by defaults/preferences
-			pdService.startAudio(new Intent(this, PdWebKit.class), android.R.drawable.ic_media_play, name, "Return to " + name + ".");
 		} catch (IOException e) {
 			post(e.toString() + "; exiting now");
 			finish();
 		}
+		pdService.startAudio(new Intent(this, PdWebKit.class), android.R.drawable.ic_media_play, name, "Return to " + name + ".");
 	}
 
 	@Override
