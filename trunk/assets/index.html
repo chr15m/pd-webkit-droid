@@ -141,6 +141,7 @@
 			display: none;
 			overflow-x: hidden;
 			overflow-y: scroll;
+			z-index: 200;
 		}
 		
 		#about img,button {
@@ -197,7 +198,7 @@
 			message.innerHTML = txt;
 			messagecounter = 0.85;
 			message.style.display = "block";
-			messageinterval = setTimeout(cancelMessage, 1000);
+			messageinterval = setTimeout(cancelMessage, 3000);
 		}
 		
 		function cancelMessage() {
@@ -243,11 +244,13 @@
 				recordicon.src = "record.png";
 				record = false;
 				send("stop", "bang");
+				alert("recorded to sdcard/GarageAcidLab");
 			} else {
 				// start recording
 				recordicon.src = "stop.png";
 				record = true;
 				send("record", "bang");
+				alert("recording to sdcard/GarageAcidLab");
 			}
 		}
 		
