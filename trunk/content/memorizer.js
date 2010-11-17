@@ -478,18 +478,16 @@ function Memorizer(where)
 		// how many cards can we fit on this screen?
 		var horizfit = Math.floor(this.fieldWidth / (this.cardWidth + this.cardXMargin));
 		var vertfit = Math.floor(this.fieldHeight / (this.cardHeight + this.cardYMargin));
-		// make sure we don't have more than 24 cards
-		while ((horizfit * vertfit) > 24) vertfit -= 1;
-		// if we come up with an odd number of cards, we should remove a row
-		if ((horizfit * vertfit) % 2) vertfit -= 1;
-		// calculate the offsets
-		this.cardXOffset = Math.round((this.fieldWidth - (horizfit * (this.cardWidth + this.cardXMargin))) / 2);
-		this.cardYOffset = Math.round((this.fieldHeight - (vertfit * (this.cardHeight + this.cardYMargin))) / 2);
 		// total number of cards in play
 		this.cardCount = horizfit * vertfit;
+		// make sure we don't have more than 24 cards, and have an even number of cards
+		this.cardCount = Math.min(this.cardCount - (this.cardCount % 2), 24);
+		// calculate the offsets
+		this.cardXOffset = Math.round((this.fieldWidth - (horizfit * (this.cardWidth + this.cardXMargin))) / 2);
+		this.cardYOffset = Math.round((this.fieldHeight - ((this.cardCount / horizfit) * (this.cardHeight + this.cardYMargin))) / 2);
 		
 		// pick 12 cards at random and add them twice
-		for (i = 0; i < horizfit * vertfit / 2; i++)
+		for (i = 0; i < this.cardCount / 2; i++)
 		{
 			do { c = parseInt(Math.random() * this.cardCount / 2) } while (card[c]);
 			card[c] = true;
@@ -499,9 +497,21 @@ function Memorizer(where)
 			pos[p] = c + 1;
 		}
 		
+		// add blank cards to fill any remaining rows
+		i *= 2;
+		while (i < Math.min(24, vertfit * horizfit)) {
+			var n = MakeImg(field);
+			var x = (i % horizfit) * (this.cardWidth + this.cardXMargin) + this.cardXOffset;
+			var y = Math.floor(i / horizfit) * (this.cardHeight + this.cardYMargin) + this.cardYOffset;
+			n.src = imgs + "cardblank.png";
+			n.style.left = x;
+			n.style.top = y;
+			i++;
+		}
+		
 		this.MakeCard = function(f, i, c)
 		{
-			n = MakeImg(f);
+			var n = MakeImg(f);
 			//document.createElement("img");
 			this.cards[this.cards.length] = n;
 			PodSix.Inherit(n, new Card(this));
