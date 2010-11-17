@@ -1,0 +1,56 @@
+<html>
+<head>
+	<title>PdWebKit test patch</title>
+	<style>
+		* {
+			-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+		}
+		
+		body {
+			margin: 0px;
+			padding: 0px;
+			width: 100%;
+			height: 100%;
+			font-family: Arial;
+			font-size: 16px;
+		}
+		
+		#kaospad {
+			width:80%;
+			border: 1px solid black;
+			margin-left: auto;
+			margin-right: auto;
+		}
+	</style>
+	<script>
+	function PdReceive(msg) {
+		alert("Pd sent back: " + msg);
+	}
+	
+	var kaospad = null;
+	function kaos(event) {
+		var touch = event.touches[0];
+		var x = (touch.clientX - parseInt(kaospad.offsetLeft)) / parseInt(kaospad.offsetWidth);
+		var y = (touch.clientY - parseInt(kaospad.offsetTop)) / parseInt(kaospad.offsetHeight);
+		Pd.send("osc1", x);
+		Pd.send("osc2", y);
+	}
+	
+	function launch() {
+		kaospad = document.getElementById("kaospad");
+		kaospad.style.height = kaospad.offsetWidth;
+	}
+	</script>
+</head>
+<body onload='launch();' onresize='launch();'>
+	<p><strong>PdWebKit test patch</strong></p>
+	<input type='checkbox' onchange='Pd.send("mic", this.checked * 1.0);' name='mic'/>
+	<label for='mic'>mic</label><br/>
+	<input type='checkbox' onchange='Pd.send("left", this.checked * 1.0);' name='left'/ checked>
+	<label for='left'>left</label><br/>
+	<input type='checkbox' onchange='Pd.send("right", this.checked * 1.0);' name='right'/ checked>
+	<label for='right'>right</label><br/>
+	<input name='test' id='test'><button onclick='Pd.send("test", document.getElementById("test").value);'>send</button><br/>
+	<div id='kaospad' ontouchstart='kaos(event);' ontouchmove='kaos(event);'></div>
+</body>
+</html>
