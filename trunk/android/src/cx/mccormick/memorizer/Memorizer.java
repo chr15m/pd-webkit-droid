@@ -1,4 +1,4 @@
-package cx.mccormick.littlelooper;
+package cx.mccormick.memorizer;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import android.os.Environment;
 import java.io.FileInputStream;
 import java.io.File;
 
-public class LittleLooper extends Activity
+public class Memorizer extends Activity
 {
     private static final String LOG_TAG = "WebViewDemo";
     private WebView mWebView;
@@ -35,7 +35,7 @@ public class LittleLooper extends Activity
         webSettings.setSupportZoom(false);
 
         mWebView.setWebChromeClient(new MyWebChromeClient());
-        mWebView.addJavascriptInterface(new DemoJavaScriptInterface(), "LittleLooperEngine");
+        //mWebView.addJavascriptInterface(new DemoJavaScriptInterface(), "LittleLooperEngine");
         mWebView.loadUrl("file:///android_asset/index.html");
 	
 	File file[] = Environment.getExternalStorageDirectory().listFiles();  
@@ -58,7 +58,7 @@ public class LittleLooper extends Activity
             mHandler.post(new Runnable() {
                 public void run() {
                     // send the number 12 to our javascript gui component
-                    mWebView.loadUrl("javascript:LittleLooperGUI.tick(19)");
+                    //mWebView.loadUrl("javascript:LittleLooperGUI.tick(19)");
                 }
             });
 

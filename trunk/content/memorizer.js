@@ -417,13 +417,12 @@ function Memorizer(where)
 	this.winScreen = null;
 	this.cards = [];
 	
-
 	this.Launch = function(where)
 	{
 		field = document.createElement("div");
 		field.style.border = "0px solid black";
-		field.style.width = "322px";
-		field.style.height = "485px";
+		field.style.width = "320px";
+		field.style.height = "480px";
 		field.style.margin = "0px";
 		field.style.padding = "0px";
 		field.style.backgroundImage = "url(" + i_background + ")";
