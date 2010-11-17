@@ -204,31 +204,10 @@ public class CanOfBeats extends Activity {
 					list.add(bits[i]);
 				}
 			}
-			//Log.e("sending list", "[" + dest + "] -> " + list.toString());
+			
  			ol = list.toArray();
 			PdBase.sendList(dest, ol);
 			Log.e("sending list", "[" + dest + "] -> " + ol.toString());
-			//PdBase.sendMessage(dest, dest, list);
-			
-			/*try {
-				sendMessage(dest, s);
-			} catch (RemoteException e) {
-				Log.e("Message error", e.toString());
-			}*/
-			
-			//PdBase.sendList(dest, (Object[])s.split(" "));
-			
-			//PdBase.sendList(dest, s);
-			
-			/*Object[] list = (Object[])s.split(" ");
-			for (int i=0; i<list.length; i++) {
-				try {
-					list[i] = (Object)(Float.parseFloat((String)list[i]));
-				} catch (NumberFormatException e) {
-					// do nothing
-				}
-			}
-			PdBase.sendList(dest, list);*/
 		}
 		
 		public void sendBang(String s) {
@@ -274,15 +253,6 @@ public class CanOfBeats extends Activity {
 
 	private void cleanup() {
 		Resources res = getResources();
-		// remove our unpacked directory from the sdcard
-		/*File scdir = new File("/sdcard/" + res.getString(R.string.app_name) + "/");
-		Log.e("TEST", "" + scdir.exists());
-		try {
-			deleteDir(scdir);
-		} catch (IOException e) {
-			Log.e("cleanup", "Couldn't clean up patch directory.");
-		}
-		Log.e("TEST", "" + scdir.exists());*/
 		// make sure to release all resources
 		if (pdService != null) pdService.stopAudio();
 		PdUtils.closePatch(patch);
@@ -293,69 +263,5 @@ public class CanOfBeats extends Activity {
 			// already unbound
 			pdService = null;
 		}
-	}
-
-	private void sendMessage(String dest, String s) throws RemoteException {
-		String symbol = null;
-		boolean isAny = s.length() > 0 && s.charAt(0) == ';';
-		Scanner sc = new Scanner(isAny ? s.substring(1) : s);
-		post("Sending: " + s);
-		if (isAny) {
-			if (sc.hasNext()) dest = sc.next();
-			else {
-				post("Message not sent (empty recipient)");
-				return;
-			}
-			if (sc.hasNext()) symbol = sc.next();
-			else {
-				post("Message not sent (empty symbol)");
-			}
-		}
-		List<Object> list = new ArrayList<Object>();
-		while (sc.hasNext()) {
-			if (sc.hasNextInt()) {
-				list.add(new Float(sc.nextInt()));
-			} else if (sc.hasNextFloat()) {
-				list.add(sc.nextFloat());
-			} else {
-				list.add(sc.next());
-			}
-		}
-		if (isAny) {
-			PdBase.sendMessage(dest, symbol, list);
-			post("sent message");
-		} else {
-			switch (list.size()) {
-			case 0:
-				PdBase.sendBang(dest);
-				post("sent bang");
-				break;
-			case 1:
-				Object x = list.get(0);
-				if (x instanceof String) {
-					PdBase.sendSymbol(dest, (String) x);
-					post("sent symbol");
-				} else {
-					PdBase.sendFloat(dest, (Float) x);
-					post("sent float");
-				}
-				break;
-			default:
-				PdBase.sendList(dest, list);
-				post("sent list: (" + dest + ", " + list + ")");
-				break;
-			}
-		}
-	}
-
-	private void deleteDir(File f) throws IOException {
-		Log.e("delete:", "" + f.toString());
-		if (f.isDirectory()) {
-			for (File c : f.listFiles()) {
-				deleteDir(c);
-			}
-		}
-		if (!f.delete())
-			throw new FileNotFoundException("Failed to delete file: " + f);
 	}
 }

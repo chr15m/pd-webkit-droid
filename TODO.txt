@@ -1,12 +1,4 @@
- * high scores
- + stop window from being scrollable
- + does the front page menu work properly?
- + make front menu fit better (min height)
- + fit more columns on the smaller phone
- + eliminate scrollbars on body (overflow)
- + icon
- + Fix the title page to fit in a smaller area
- + Remove the 'get more games' link or make it work by opening a browser
- + Make the number of cards fit within the screen dimensions
- + put a podsix graphic if there is a hole in the cards
- ? get rid of the title bar?
+ * ticker
+ * button color on press
+ + reduce click delay time
+ + only play hearable notes
