@@ -7,3 +7,4 @@ build.xml
 local.properties
 gen
 res/raw/patch.zip
+libs
