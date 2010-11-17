@@ -120,6 +120,13 @@ function WinScreen(where, app)
 	this.wintext.style.backgroundRepeat = "no-repeat";
 	this.wintext.style.backgroundPosition = "center center";
 	
+	this.highscore = MakeDiv(repr)
+	this.highscore.style.position = "absolute";
+	this.highscore.style.top = "75%";
+	this.highscore.style.width = "100%";
+	this.highscore.style.textAlign = "center";
+	this.highscore.style.fontFamily = "Arial";
+	
 	this.Hide = function Hide()
 	{
 		repr.style.visibility = "hidden";
@@ -127,8 +134,21 @@ function WinScreen(where, app)
 	
 	this.Show = function Show()
 	{
+		var hsv = parseInt(readCookie('highscore'));
+		
+		if (isNaN(hsv)) {
+			createCookie("highscore", this.app.points, 3650);
+			this.highscore.innerHTML = "<br/>" + this.app.points + " moves";
+		} else {
+			if (this.app.points < hsv) {
+				createCookie("highscore", this.app.points, 3650);
+				this.highscore.innerHTML = "<br/>New best score!<br/>" + this.app.points + " moves";
+			} else {
+				this.highscore.innerHTML = "<br/>Didn't beat " + hsv + " moves";
+			}
+		}
 		repr.style.visibility = "visible";
-		window.setTimeout("PodSix.callback[" + PodSix.RegisterCallback(this) + "].app.ShowTitle();", 3000);
+		window.setTimeout("PodSix.callback[" + PodSix.RegisterCallback(this) + "].app.ShowTitle();", 5000);
 	}
 	
 	this.Hide();
@@ -422,6 +442,7 @@ function Memorizer(where)
 	this.cards = [];
 	this.fieldWidth = 0;
 	this.fieldHeight = 0;
+	this.points = 0;
 	
 	this.Launch = function(where)
 	{
@@ -458,6 +479,7 @@ function Memorizer(where)
 	
 	this.ShowTitle = function()
 	{
+		this.points = 0;
 		this.titleScreen.Show();
 		//this.ad.style.visibility = "visible";
 		//this.ad.style.display = "inline";
@@ -530,6 +552,7 @@ function Memorizer(where)
 	
 	this.CheckMatch = function(t)
 	{
+		this.points += 1;
 		if (this.lastClicked)
 		{
 			if (this.lastClicked.i == t.i && this.lastClicked.c != t.c)
