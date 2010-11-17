@@ -4,22 +4,24 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.webkit.WebView;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
+import android.os.Environment;
 
 import java.io.FileInputStream;
+import java.io.File;
 
 public class LittleLooper extends Activity
 {
     private static final String LOG_TAG = "WebViewDemo";
     private WebView mWebView;
     private Handler mHandler = new Handler();
-    private MediaPlayer mp = new MediaPlayer();
     private FileInputStream fis;
-
+    private int i;
+    
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -35,21 +37,12 @@ public class LittleLooper extends Activity
         mWebView.setWebChromeClient(new MyWebChromeClient());
         mWebView.addJavascriptInterface(new DemoJavaScriptInterface(), "LittleLooperEngine");
         mWebView.loadUrl("file:///android_asset/index.html");
-
-	/*
-        try {
-            fis = openFileInput("test.wav");
-        } catch (java.io.FileNotFoundException e) {
-            System.out.println("file not foundzz");
-        }
-        try {
-            //mp.reset();
-            mp.setDataSource(fis.getFD());
-            mp.prepare();
-            mp.start();
-        } catch (java.io.IOException e) {
-            System.out.println("test.wav doesn't exist");
-        }*/
+	
+	File file[] = Environment.getExternalStorageDirectory().listFiles();  
+	System.out.println("***");
+	for (i=0; i< file.length; i++)
+		System.out.println(file[i].getAbsolutePath());
+	System.out.println("***");
     }
 
     final class DemoJavaScriptInterface {
@@ -65,7 +58,7 @@ public class LittleLooper extends Activity
             mHandler.post(new Runnable() {
                 public void run() {
                     // send the number 12 to our javascript gui component
-                    mWebView.loadUrl("javascript:LittleLooperGUI.tick(12)");
+                    mWebView.loadUrl("javascript:LittleLooperGUI.tick(19)");
                 }
             });
 
