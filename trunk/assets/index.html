@@ -26,6 +26,7 @@
 		}
 		
 		#loading {
+			position: relative;
 			text-align: center;
 			margin-top: 10px;
 			background: #ffffff;
@@ -37,6 +38,23 @@
 			margin-right: auto;
 			-webkit-border-radius: 3px;
 			-moz-border-radius: 3px;
+			z-index: 200;
+		}
+		
+		#loading-container {
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			margin: 0px;
+			padding: 0px;
+			width: 100%;
+			height: 100%;
+			border: 0px solid black;
+			background-color: white;
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-image: url(podsixbg.png);
+			z-index: 100;
 		}
 		
 		button {
@@ -52,7 +70,14 @@
 			-webkit-border-radius: 3px;
 			-moz-border-radius: 3px;
 		}
-
+		
+		#clear {
+			position: absolute;
+			width: 20%;
+			right: 3px;
+			bottom: 70px;
+		}
+		
 		#buttons {
 			position: absolute;
 			top: 20px;
@@ -179,13 +204,22 @@
 			document.getElementById("about").style.width = parseInt(window.innerWidth) - 20;
 			document.getElementById("help").style.minHeight = parseInt(window.innerHeight) - 20;
 			document.getElementById("about").style.minHeight = parseInt(window.innerHeight) - 20;
-			document.getElementById("body").style.width = window.innerWidth;
-			document.getElementById("page").style.width = window.innerWidth;
+			//document.getElementById("body").style.width = window.innerWidth;
+			//document.getElementById("page").style.width = window.innerWidth;
+		}
+		
+		function clearsynth() {
+			for (var i=0; i<16; i++) {
+				synth_row[Math.floor(i / 8)][i % 8].style.backgroundColor = colors[0];
+				Pd.send("synth", Math.floor(i / 8) + " " + (i % 8) + " 0");
+				synth_data[Math.floor(i / 8)][i % 8] = 0;
+			}
 		}
 		
 		function PdReceive(what) {
 			if (what == "init") {
 				newMessage("fresh beat!");
+				document.getElementById("loading-container").style.display = "none";
 				document.getElementById("buttons").style.display = "block";
 				Pd.sendBang("startticker");
 			} else {
@@ -207,8 +241,10 @@
 <body onLoad='launch();' onResize='launch();'>
 	<div id="page">
 		<div id='buttons'><button ontouchstart='Pd.sendBang("shake"); this.style.background="red";' ontouchend='this.style.background="#ffaaaa"'>new beat</button></div>
+		<div id='loading-container'></div>
 		<div id='loading'>Loading...</div>
 		<div id='ticker'></div>
+		<button id='clear' onclick='clearsynth();'>X</button>
 		<table id="synths">
 			<tr>
 				<td></td>
