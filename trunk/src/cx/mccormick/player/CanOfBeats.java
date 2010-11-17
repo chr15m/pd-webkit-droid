@@ -248,6 +248,8 @@ public class CanOfBeats extends Activity {
 
 		mWebView.setWebChromeClient(new MyWebChromeClient());
 		mWebView.addJavascriptInterface(new JavaScriptInterface(), "Pd");
+		//mWebView.setScrollBarStyle(WebView.)
+		mWebView.setVerticalScrollbarOverlay(true);
 		mWebView.loadUrl("file:///android_asset/index.html");
 	}
 

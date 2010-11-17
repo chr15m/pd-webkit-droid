@@ -11,11 +11,18 @@
 			padding: 0px;
 			width: 100%;
 			height: 100%;
-			overflow: hidden;
 			background-repeat: no-repeat;
 			background-position: center center;
 			background-image: url(background.png);
 			font-family: Arial;
+		}
+		
+		#page {
+			width: 100%;
+			height: 100%;
+			margin: 0px;
+			padding: 0px;
+			overflow: hidden;
 		}
 		
 		#loading {
@@ -76,8 +83,46 @@
 			width: 12%;
 			display: none;
 		}
+		
+		#about, #help {
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			margin: 0px;
+			padding: 10px;
+			width: 100%;
+			min-height: 100%;
+			background: white;
+			display: none;
+			overflow-x: hidden;
+			overflow-y: scroll;
+		}
+		
+		#about img,button {
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		
+		#logo {
+			border: 0px solid black;
+		}
+		
+		#help button {
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+		}
 	</style>
 	<script>
+		function help() {
+			document.getElementById("help").style.display = "block";
+		}
+		
+		function about() {
+			document.getElementById("about").style.display = "block";
+		}
+		
 		var message = null;
 		var messagecounter = 0;
 		var messageinterval = null;
@@ -130,6 +175,12 @@
 			}
 			ticker.style.width = parseInt(synth_row[0][3].offsetLeft) + parseInt(synth_row[0][0].offsetWidth) - parseInt(synth_row[0][0].offsetLeft);
 			ticker.style.height = parseInt(synth_row[0][0].offsetHeight);
+			document.getElementById("help").style.width = parseInt(window.innerWidth) - 20;
+			document.getElementById("about").style.width = parseInt(window.innerWidth) - 20;
+			document.getElementById("help").style.minHeight = parseInt(window.innerHeight) - 20;
+			document.getElementById("about").style.minHeight = parseInt(window.innerHeight) - 20;
+			document.getElementById("body").style.width = window.innerWidth;
+			document.getElementById("page").style.width = window.innerWidth;
 		}
 		
 		function PdReceive(what) {
@@ -154,7 +205,7 @@
 </head>
 
 <body onLoad='launch();' onResize='launch();'>
-	<div id="page" style="border: 0px solid silver; width: 100%; height: 100%; margin: 0px; padding: 0px; overflow: hidden;">
+	<div id="page">
 		<div id='buttons'><button ontouchstart='Pd.sendBang("shake"); this.style.background="red";' ontouchend='this.style.background="#ffaaaa"'>new beat</button></div>
 		<div id='loading'>Loading...</div>
 		<div id='ticker'></div>
@@ -180,6 +231,20 @@
 				<td></td>
 			</tr>
 		</table>
+	</div>
+	<div id="help">
+		<h3>Help</h3>
+		<p>CanOfBeats is a HipHop beat generator. Press the 'new beat' button in order to generate a completely original new beat. The 16 small buttons at the bottom of the screen allow you to input melodies. The notes will play left-to-right, one row after another, and you get four notes to play with, each represented by it's own colour.</p>
+		<button onclick='document.getElementById("help").style.display = "none";'>Ok</button>
+	</div>
+	<div id="about">
+		<a href='http://podsix.com.au/'><img src='podsix.png' class='logo'></a>
+		<p>CanOfBeats is copyright Chris McCormick, 2009, 2010.</p>
+		<p>This program is GPLv3 licensed. A copy of the LICENSE.txt is available online <a href='http://mccormick.cx/projects/CanOfBeats/LICENSE.txt'>here</a>.</p>
+		<p>Obtain the sourcecode with bzr:<br/><code>bzr co http://mccormick.cx/dev/CanOfBeats-Android.bzr/</code></p>
+		<h3>Pure Data</h3>
+		<p>This program contains Pure Data by Miller S. Puckette, and pd-for-android by Peter Brinkmann. These are BSD licensed. See the file called LICENSE.txt for details. A copy of that file is available online <a href='http://mccormick.cx/projects/CanOfBeats/LICENSE.txt'>here</a>.</p>
+		<button onclick='document.getElementById("about").style.display = "none";'>Ok</button>
 	</div>
 </body>
 
