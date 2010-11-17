@@ -34,6 +34,7 @@ import android.webkit.WebView;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
+import android.view.KeyEvent;
 
 public class CanOfBeats extends Activity {
 
@@ -76,7 +77,16 @@ public class CanOfBeats extends Activity {
 			} else {
 				space = "";
 			}
+			//post("[" + symbol + "]" + space + msg.toString());
+			// dispatch key event
+			/*if (symbol.equals("key")) {
+				int x = ((Float)args[0]).intValue();
+                		mWebView.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, x));
+		                mWebView.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, x));
+				//mWebView.dispatchKeyEvent(new KeyEvent(0, args[0].toString(), 0, 0));
+			} else {*/
 			js("PdReceive('" + symbol + space + msg.toString() + "')");
+			//}
 		}
 		
 		@Override public void receiveSymbol(String symbol)  { js("PdReceive('" + symbol + "')"); }
@@ -85,14 +95,14 @@ public class CanOfBeats extends Activity {
 	};
 
 	private void js(final String call) {
-		//post("js: [" + call + "]");
-		mWebView.loadUrl("javascript:" + call + ";");
-		/*handler.post(new Runnable() {
-			@Override
+		this.runOnUiThread(new Runnable() {
 			public void run() {
+				mWebView.pauseTimers();
 				mWebView.loadUrl("javascript:" + call + ";");
+				mWebView.resumeTimers();
 			}
-		});*/
+		});
+		// mWebView.loadUrl("javascript:" + call + ";");
 	}
 
 	private void post(final String msg) {
@@ -135,7 +145,9 @@ public class CanOfBeats extends Activity {
 					public void run() {
 						unpackResources();
 						bindService(new Intent(that, PdService.class), serviceConnection, BIND_AUTO_CREATE);
+						mWebView.pauseTimers();
 						pd.dismiss();
+						mWebView.resumeTimers();
 					}
 				});
 			}
@@ -167,11 +179,13 @@ public class CanOfBeats extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
+		mWebView.pauseTimers();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+		mWebView.resumeTimers();
 	}
 
 	@Override
@@ -190,12 +204,16 @@ public class CanOfBeats extends Activity {
 		webSettings.setSaveFormData(false);
 		webSettings.setJavaScriptEnabled(true);
 		webSettings.setSupportZoom(false);
+		webSettings.setBuiltInZoomControls(false);
+		//webSettings.setDatabaseEnabled(false);
+		//webSettings.setDomStorageEnabled(false);
+		//webSettings.setGeolocationEnabled(false);
+		webSettings.setPluginsEnabled(false);
+		webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
 
 		mWebView.setWebChromeClient(new MyWebChromeClient());
 		mWebView.addJavascriptInterface(new JavaScriptInterface(), "Pd");
-		//Log.d("initGui", "load index");
 		mWebView.loadUrl("file:///android_asset/index.html");
-		//Log.d("initGui", "done");
 	}
 
 	final class JavaScriptInterface {
@@ -232,7 +250,6 @@ public class CanOfBeats extends Activity {
 			
  			ol = list.toArray();
 			PdBase.sendList(dest, ol);
-			//Log.e("sending list", "[" + dest + "] -> " + ol.toString());
 		}
 		
 		public void sendBang(String s) {
@@ -247,7 +264,6 @@ public class CanOfBeats extends Activity {
 	final class MyWebChromeClient extends WebChromeClient {
 		@Override
 		public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-			//Log.d(LOG_TAG, message);
 			post(message);
 			result.confirm();
 			return true;

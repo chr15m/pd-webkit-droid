@@ -56,8 +56,8 @@
 #X obj 121 215 random 2;
 #X obj 121 282 + 60;
 #X obj 121 236 + 0;
-#X obj 117 506 + 150;
-#X obj 296 439 + 150;
+#X obj 296 439 + 300;
+#X obj 117 506 + 300;
 #X connect 1 0 55 0;
 #X connect 3 0 14 0;
 #X connect 4 0 15 0;
@@ -72,8 +72,8 @@
 #X connect 14 0 39 0;
 #X connect 15 0 53 0;
 #X connect 16 0 5 0;
-#X connect 17 0 57 0;
-#X connect 18 0 58 0;
+#X connect 17 0 58 0;
+#X connect 18 0 57 0;
 #X connect 20 0 24 0;
 #X connect 21 0 17 0;
 #X connect 22 0 18 0;
@@ -115,5 +115,5 @@
 #X connect 54 0 56 0;
 #X connect 55 0 14 1;
 #X connect 56 0 1 0;
-#X connect 57 0 16 1;
-#X connect 58 0 9 1;
+#X connect 57 0 9 1;
+#X connect 58 0 16 1;
