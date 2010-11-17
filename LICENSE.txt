@@ -1,4 +1,4 @@
-CanOfBeats is copyright Chris McCormick, 2009, 2010.
+GarageAcidLab is copyright Chris McCormick, 2009, 2010.
 The source code and Pd patches are GPLv3 licensed.
 See below for the text of the GPLv3 license.
 
@@ -6,8 +6,8 @@ This software contains Pd by Miller S. Puckette,
 and pd-for-android by Peter Brinkmann.
 Pd is BSD licensed. See below for the BSD license.
 
-CanOfBeats License - GPLv3
---------------------------
+GarageAcidLab License - GPLv3
+-----------------------------
 
                    GNU LESSER GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
