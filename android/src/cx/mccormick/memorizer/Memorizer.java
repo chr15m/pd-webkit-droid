@@ -9,7 +9,9 @@ import android.webkit.WebView;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
+import android.content.res.Configuration;
 //import android.os.Environment;
+import android.widget.Toast;
 
 import java.io.FileInputStream;
 import java.io.File;
@@ -74,9 +76,73 @@ public class Memorizer extends Activity
     final class MyWebChromeClient extends WebChromeClient {
         @Override
         public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-            Log.d(LOG_TAG, message);
+            //Log.d(LOG_TAG, message);
+            post(message);
             result.confirm();
             return true;
         }
     }
+
+    /**
+     * Put a string on the screen.
+     **/
+	private void post(final String msg) {
+		mHandler.post(new Runnable() {
+			@Override
+			public void run() {
+				Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+			}
+		});
+	}
+
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		mWebView.pauseTimers();
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		mWebView.resumeTimers();
+	}
+	
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+	}
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		mWebView.loadUrl("about:blank");
+	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+	}
+	
+	@Override
+	public void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+		mWebView.restoreState(savedInstanceState);
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
+		mWebView.saveState(savedInstanceState);
+	}
 }
