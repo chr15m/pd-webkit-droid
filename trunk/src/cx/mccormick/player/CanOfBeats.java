@@ -158,6 +158,7 @@ public class CanOfBeats extends Activity {
 	}
 
 	private void initGui() {
+		Log.d("initGui", "started");
 		setContentView(R.layout.main);
 		mWebView = (WebView) findViewById(R.id.webview);
 		
@@ -169,7 +170,9 @@ public class CanOfBeats extends Activity {
 
 		mWebView.setWebChromeClient(new MyWebChromeClient());
 		mWebView.addJavascriptInterface(new JavaScriptInterface(), "Pd");
+		Log.d("initGui", "load index");
 		mWebView.loadUrl("file:///android_asset/index.html");
+		Log.d("initGui", "done");
 	}
 
 	final class JavaScriptInterface {
@@ -193,7 +196,41 @@ public class CanOfBeats extends Activity {
 		public void trace(String s) { System.out.println(s); }
 		
 		public void send(String dest, String s) {
-			PdBase.sendList(dest, (Object[])s.split(" "));
+			List<Object> list = new ArrayList<Object>();
+			String[] bits = s.split(" ");
+			Object[] ol;
+			for (int i=0; i < bits.length; i++) {
+				try {
+					list.add(Float.parseFloat(bits[i]));
+				} catch (NumberFormatException e) {
+					list.add(bits[i]);
+				}
+			}
+			//Log.e("sending list", "[" + dest + "] -> " + list.toString());
+ 			ol = list.toArray();
+			PdBase.sendList(dest, ol);
+			Log.e("sending list", "[" + dest + "] -> " + ol.toString());
+			//PdBase.sendMessage(dest, dest, list);
+			
+			/*try {
+				sendMessage(dest, s);
+			} catch (RemoteException e) {
+				Log.e("Message error", e.toString());
+			}*/
+			
+			//PdBase.sendList(dest, (Object[])s.split(" "));
+			
+			//PdBase.sendList(dest, s);
+			
+			/*Object[] list = (Object[])s.split(" ");
+			for (int i=0; i<list.length; i++) {
+				try {
+					list[i] = (Object)(Float.parseFloat((String)list[i]));
+				} catch (NumberFormatException e) {
+					// do nothing
+				}
+			}
+			PdBase.sendList(dest, list);*/
 		}
 		
 		public void sendBang(String s) {
@@ -260,8 +297,8 @@ public class CanOfBeats extends Activity {
 		}
 	}
 
-	private void sendMessage(String s) throws RemoteException {
-		String dest = "gui", symbol = null;
+	private void sendMessage(String dest, String s) throws RemoteException {
+		String symbol = null;
 		boolean isAny = s.length() > 0 && s.charAt(0) == ';';
 		Scanner sc = new Scanner(isAny ? s.substring(1) : s);
 		post("Sending: " + s);
