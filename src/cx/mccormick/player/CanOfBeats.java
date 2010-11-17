@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.lang.StringBuffer;
 
 import org.puredata.android.service.PdService;
@@ -16,7 +18,7 @@ import org.puredata.core.utils.PdDispatcher;
 import org.puredata.core.utils.PdListener;
 
 import android.app.Activity;
-//import android.app.ProgressDialog;
+import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -107,12 +109,39 @@ public class CanOfBeats extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		final ProgressDialog pd = new ProgressDialog(CanOfBeats.this);
+		final CanOfBeats that = this;
 		super.onCreate(savedInstanceState);
-		//final ProgressDialog dialog = ProgressDialog.show(CanOfBeats.this, "", "Loading. Please wait...", true);
+		Timer t = new Timer(); 
+		pd.setMessage("Loading. Please wait...");
+		pd.setCancelable(false);
+		pd.setIndeterminate(true);
+		pd.show();
+		Log.e("COB", "start");
+		Log.e("COB", "initGui");
 		initGui();
-		unpackResources();
-		bindService(new Intent(this, PdService.class), serviceConnection, BIND_AUTO_CREATE);
-		//dialog.dismiss();
+		t.schedule(new TimerTask() {
+			public void run() {
+				handler.post(new Runnable() {
+					public void run() {
+						unpackResources();
+						bindService(new Intent(that, PdService.class), serviceConnection, BIND_AUTO_CREATE);
+						pd.dismiss();
+					}
+				});
+			}
+		}, 2000);
+		/*handler.post(new Runnable() {
+			@Override
+			public void run() {
+				Log.e("COB", "unpackResources");
+				unpackResources();
+				Log.e("COB", "bindService");
+				bindService(new Intent(that, PdService.class), serviceConnection, BIND_AUTO_CREATE);
+				Log.e("COB", "dismiss");
+				pd.dismiss();
+			}
+		});*/
 	}
 	
 	private void unpackResources() {
