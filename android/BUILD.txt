@@ -1,0 +1,2 @@
+to generate the release key:
+keytool -genkey -v -keystore memorizer.keystore -alias memorizer -keyalg RSA -keysize 2048 -validity 10000
