@@ -1,6 +1,7 @@
- * does the front page menu work properly?
- * make front menu fit better (min height)
  * high scores
+ + stop window from being scrollable
+ + does the front page menu work properly?
+ + make front menu fit better (min height)
  + fit more columns on the smaller phone
  + eliminate scrollbars on body (overflow)
  + icon

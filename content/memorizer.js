@@ -233,8 +233,8 @@ function TitleScreen(where, callbackID)
 	this.title = MakeDiv(repr);
 	this.title.style.backgroundImage = "url(" + i_memorizer + ")";
 	this.title.style.width = repr.style.width;
-	this.title.style.height = "46";
-	this.title.style.top = "65px";
+	this.title.style.height = "46px";
+	this.title.style.top = "70px";
 	this.title.style.border = "0px solid black";
 	this.title.style.backgroundRepeat = "no-repeat";
 	this.title.style.backgroundPosition = "center center";
@@ -256,7 +256,12 @@ function TitleScreen(where, callbackID)
 		this.i = j;
 		this.option[i].style.width = repr.style.width;
 		this.option[i].style.height = "60px";
-		this.option[i].style.bottom = (i * 38) + "px";
+		if (i == 1) {
+			this.option[i].style.position = "relative";
+			this.option[i].style.top = "40%";
+		} else {
+			this.option[i].style.bottom = (i * 38) + "px";
+		}
 		this.option[i].style.border = "0px solid black";
 		this.option[i].style.backgroundRepeat = "no-repeat";
 		this.option[i].style.backgroundPosition = "center center";
@@ -483,8 +488,8 @@ function Memorizer(where)
 		// make sure we don't have more than 24 cards, and have an even number of cards
 		this.cardCount = Math.min(this.cardCount - (this.cardCount % 2), 24);
 		// calculate the offsets
-		this.cardXOffset = Math.round((this.fieldWidth - (horizfit * (this.cardWidth + this.cardXMargin))) / 2);
-		this.cardYOffset = Math.round((this.fieldHeight - ((this.cardCount / horizfit) * (this.cardHeight + this.cardYMargin))) / 2 - this.cardYMargin * 1.5);
+		this.cardXOffset = Math.round((this.fieldWidth - (horizfit * (this.cardWidth + this.cardXMargin))) / 2 + this.cardXMargin);
+		this.cardYOffset = Math.round((this.fieldHeight - ((this.cardCount / horizfit) * (this.cardHeight + this.cardYMargin))) / 2 - this.cardYMargin);
 		
 		// pick 12 cards at random and add them twice
 		for (i = 0; i < this.cardCount / 2; i++)
