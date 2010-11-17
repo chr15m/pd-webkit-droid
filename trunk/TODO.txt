@@ -1,3 +1,7 @@
  * integrate mic fix from Peter
  * integrate other fix from Peter
  * turn on mic
+ * make help and about work on every page
+ * upload to project page on mccormick.cx
+ * provide default style for checkboxes etc. which suck less.
+
