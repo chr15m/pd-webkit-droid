@@ -450,10 +450,10 @@ function Memorizer(where)
 		this.loadingScreen.StartCheck(this);
 		
 		this.ad = document.getElementById("memorizerAd");
-		this.ad.style.top = parseInt(field.offsetTop) + 150;
-		this.ad.style.position = "absolute";
-		this.ad.style.left = parseInt(field.offsetLeft) + parseInt(field.offsetWidth) / 2 - this.ad.offsetWidth / 2;
-		this.ad.style.zIndex = 1000;
+		//this.ad.style.top = parseInt(field.offsetTop) + 150;
+		//this.ad.style.position = "absolute";
+		//this.ad.style.left = parseInt(field.offsetLeft) + parseInt(field.offsetWidth) / 2 - this.ad.offsetWidth / 2;
+		//this.ad.style.zIndex = 1000;
 	}
 	
 	this.ShowTitle = function()
@@ -484,7 +484,7 @@ function Memorizer(where)
 		this.cardCount = Math.min(this.cardCount - (this.cardCount % 2), 24);
 		// calculate the offsets
 		this.cardXOffset = Math.round((this.fieldWidth - (horizfit * (this.cardWidth + this.cardXMargin))) / 2);
-		this.cardYOffset = Math.round((this.fieldHeight - ((this.cardCount / horizfit) * (this.cardHeight + this.cardYMargin))) / 2);
+		this.cardYOffset = Math.round((this.fieldHeight - ((this.cardCount / horizfit) * (this.cardHeight + this.cardYMargin))) / 2 - this.cardYMargin * 1.5);
 		
 		// pick 12 cards at random and add them twice
 		for (i = 0; i < this.cardCount / 2; i++)
