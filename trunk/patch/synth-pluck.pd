@@ -24,7 +24,7 @@
 #X msg 119 132 set table-\$1;
 #X obj 118 33 unpack f f;
 #X obj 175 54 == \$2;
-#X obj 9 255 sel 0;
+#X obj 9 243 sel 0;
 #X obj 9 336 t f f;
 #X obj 249 12 inlet;
 #X obj 249 33 unpack f f;
@@ -32,7 +32,7 @@
 #X obj 234 80 ||;
 #X obj 118 107 spigot;
 #X obj 279 89 spigot;
-#X obj 9 234 tabread table-0;
+#X obj 9 222 tabread table-0;
 #X obj 121 215 random 2;
 #X obj 121 282 + 60;
 #X obj 117 506 + 300;
@@ -41,6 +41,7 @@
 #X obj 185 546 print notelength;
 #X obj 121 236 - 1;
 #X obj 9 671 *~ 0.25;
+#X obj 36 263 - 1;
 #X connect 0 0 35 0;
 #X connect 2 0 6 0;
 #X connect 3 0 5 0;
@@ -63,7 +64,7 @@
 #X connect 23 1 24 0;
 #X connect 24 0 30 0;
 #X connect 24 0 31 1;
-#X connect 25 1 2 0;
+#X connect 25 1 42 0;
 #X connect 26 0 11 0;
 #X connect 26 1 37 0;
 #X connect 27 0 28 0;
@@ -83,3 +84,4 @@
 #X connect 40 0 0 0;
 #X connect 40 0 38 0;
 #X connect 41 0 10 0;
+#X connect 42 0 2 0;
