@@ -30,11 +30,12 @@
 		margin-right: 50px;
 	}
  	
-	#androidlogo {
+	#androidlogo, #qrcode {
 		float: right;
 		margin-left: 10px;
 		margin-right: 10px;
 		margin-bottom: 10px;
+		border: 0px;
 	}
 	
 	p {
@@ -62,7 +63,9 @@
 <img id='androidlogo' src='images/android.png'>
 <h1>CanOfBeats</h1>
 <p class='description'>Instantly and easy generate an infinite number of hip hop beats to jam over, right on your Android phone. This music making app gets you fresh beats every time with the tap of a button. Use the note sequencer to create zippy melodies and basslines.</p>
-<p class='description'><a href=''>Buy it from the Android Market now</a></p>
+<p class='description'>
+	<a href='market://search?q=pname:cx.mccormick.player'><img id='qrcode' src='images/qrcode.png'>Buy it from the Android Market now</a>
+</p>
 <p>This software is also available as an <a href='http://rjdj.me/music/Chris McCormick/CanOfBeats'>RjDj scene</a>.</p>
 <p>CanOfBeats is Free Software, licensed under the <a href='LICENSE.txt'>GPL version 3</a>.</p>
 <code>bzr co http://mccormick.cx/projects/CanOfBeats/</code>
