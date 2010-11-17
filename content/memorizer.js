@@ -411,7 +411,7 @@ function Memorizer(where)
 	this.cardCount = 24;
 	this.cardWidth = 100;
 	this.cardHeight = 55;
-	this.cardXMargin = 5;
+	this.cardXMargin = 4;
 	this.cardYMargin = 6;
 	this.cardXOffset = 5;
 	this.cardYOffset = 6;
