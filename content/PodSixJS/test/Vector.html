@@ -1,0 +1,34 @@
+<html>
+<head>
+	<style>
+		#output { width: 80%; left: 10%; height: 80%; top: 10%; position: absolute; padding: 10px; border: 1px solid black; }
+	</style>
+	
+	<script src='../PodSix.js'></script>
+	<script>
+	function print(x)
+	{
+		document.getElementById("output").innerHTML += x + "\n";
+	}
+	
+	function TestVectors()
+	{
+		print("Testing the PodSix.Vector() class");
+		v1 = new PodSix.Vector([10, 12]);
+		print("Vector v1: " + v1 + " 2nd element v1[1] is " + v1[1]);
+		v2 = new PodSix.Vector([5, 8]);
+		v3 = new PodSix.Vector([-13, 5]);
+		print("Vector v2=" + v2 + " and v3=" + v3);
+		print("v1 + v2 = " + v1.add(v2));
+		print("v1 - v3 = " + v1.sub(v3));
+		print("v1.length() = " + v1.length());
+		print("v1.unit() = " + v1.unit());
+		print("v1.mul(10.5) = " + v1.mul(10.5));
+	}
+	</script>
+</head>
+<body onLoad='TestVectors();'>
+	<pre id='output'></pre>
+</body>
+</html>
+
