@@ -15,6 +15,7 @@
 			background-position: center center;
 			background-image: url(background.png);
 			font-family: Arial;
+			font-size: 16px;
 		}
 		
 		#page {
@@ -75,6 +76,13 @@
 			position: absolute;
 			width: 20%;
 			right: 3px;
+			bottom: 70px;
+		}
+		
+		#record {
+			position: absolute;
+			width: 20%;
+			left: 3px;
 			bottom: 70px;
 		}
 		
@@ -159,6 +167,8 @@
 			[0, 0, 0, 0, 0, 0, 0, 0, 0,]
 		];
 		var positions = [];
+		var record = false;
+		var recordicon = null;
 		
 		function newMessage(txt) {
 			message.innerHTML = txt;
@@ -193,6 +203,7 @@
 		function launch() {
 			message = document.getElementById("loading");
 			ticker = document.getElementById("ticker");
+			recordicon = document.getElementById("recordicon");
 			initSynth();
 			var tabletop = parseInt(document.getElementById("synths").offsetTop);
 			for (var i=0; i<16; i++) {
@@ -213,6 +224,20 @@
 				synth_row[Math.floor(i / 8)][i % 8].style.backgroundColor = colors[0];
 				Pd.send("synth", Math.floor(i / 8) + " " + (i % 8) + " 0");
 				synth_data[Math.floor(i / 8)][i % 8] = 0;
+			}
+		}
+		
+		function togglerecord() {
+			if (record) {
+				// stop recording
+				recordicon.src = "stop.png";
+				record = false;
+				Pd.send("record", "bang");
+			} else {
+				// start recording
+				recordicon.src = "record.png";
+				record = true;
+				Pd.send("stop", "bang");
 			}
 		}
 		
@@ -244,7 +269,8 @@
 		<div id='loading-container'></div>
 		<div id='loading'>Loading...</div>
 		<div id='ticker'></div>
-		<button id='clear' onclick='clearsynth();'>X</button>
+		<button id='clear' onclick='clearsynth();'><img src='close.png'></button>
+		<button id='record' onclick='togglerecord();'><img src='record.png' id='recordicon'></button>
 		<table id="synths">
 			<tr>
 				<td></td>
