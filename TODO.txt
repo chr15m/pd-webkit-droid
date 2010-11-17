@@ -1,4 +1,5 @@
  * ticker
- * button color on press
+ * new beat button color on press
+ * make button colours not shades
  + reduce click delay time
  + only play hearable notes
