@@ -1,4 +1,6 @@
  * does the front page menu work properly?
+ * icon
+ * fit more columns on the smaller phone
  + Fix the title page to fit in a smaller area
  + Remove the 'get more games' link or make it work by opening a browser
  + Make the number of cards fit within the screen dimensions
