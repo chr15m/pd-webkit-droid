@@ -169,7 +169,7 @@
 			message = document.getElementById("loading");
 			ticker = document.getElementById("ticker");
 			initSynth();
-			var tabletop = document.getElementById("synths").offsetTop;
+			var tabletop = parseInt(document.getElementById("synths").offsetTop);
 			for (var i=0; i<16; i++) {
 				positions[i] = [parseInt(synth_row[Math.floor(i / 8) % 2][i % 8].offsetLeft), parseInt(synth_row[Math.floor(i / 8) % 2][i % 8].offsetTop) + tabletop];
 			}
