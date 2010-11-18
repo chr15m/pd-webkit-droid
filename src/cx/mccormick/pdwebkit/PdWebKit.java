@@ -251,7 +251,7 @@ public class PdWebKit extends Activity {
 		mWebView.addJavascriptInterface(new JavaScriptInterface(), "Pd");
 		//mWebView.setScrollBarStyle(WebView.)
 		mWebView.setVerticalScrollbarOverlay(true);
-		mWebView.loadUrl("file:///android_asset/index.html");
+		mWebView.loadUrl("file:///android_asset/loader.html#/android_asset");
 	}
 
 	final class JavaScriptInterface {
@@ -303,11 +303,11 @@ public class PdWebKit extends Activity {
 				msg.append(dir.getAbsolutePath().toString() + "', '");
 			}
 			msg.append("'");
-			js("files(" + msg + ")");
+			js("files([" + msg + "])");
 		}
 		
 		public void load(String path) {
-			post(path);
+			post("loading: " + path);
 			Resources res = getResources();
 			try {
 				patch = PdUtils.openPatch(path + "/_main.pd");
@@ -316,7 +316,8 @@ public class PdWebKit extends Activity {
 				finish();
 			}
 			bindService(new Intent(that, PdService.class), serviceConnection, BIND_AUTO_CREATE);
-			mWebView.loadUrl("file://" + path + "/index.html");
+			// mWebView.loadUrl("file://" + path + "/index.html");
+			mWebView.loadUrl("file:///android_asset/loadpatch.html#" + path);
 		}
 	}
 	

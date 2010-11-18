@@ -1,0 +1,96 @@
+<html>
+
+<head>
+	<style>
+		* {
+			-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+		}
+		
+		body {
+			margin: 0px;
+			padding: 0px;
+			width: 100%;
+			height: 100%;
+			font-family: Arial;
+			font-size: 16px;
+		}
+		
+		#page {
+			width: 100%;
+			height: 100%;
+			margin: 0px;
+			padding: 0px;
+			overflow: hidden;
+			border: 0px solid red;
+		}
+		
+		#about, #help {
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			margin: 0px;
+			padding: 0px;
+			width: 100%;
+			min-height: 100%;
+			background: white;
+			display: none;
+			overflow-x: hidden;
+			overflow-y: scroll;
+			z-index: 200;
+		}
+		
+		#about img,button {
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		
+		#help button {
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+		}
+	</style>
+	<script>
+		function help() {
+			document.getElementById("help").style.display = "block";
+		}
+		
+		function about() {
+			document.getElementById("about").style.display = "block";
+		}
+		
+		function loadpage() {
+			var page = window.location.hash.substring(1);
+			document.getElementById('page').src = page + "/index.html";
+		}
+		
+		function files(filelist) {
+			document.getElementById('page').contentWindow.files(filelist);
+		}
+		
+		function PdReceive(incoming) {
+			document.getElementById('page').contentWindow.PdReceive(incoming);
+		}
+	</script>
+</head>
+
+<body onLoad='loadpage();'>
+	<iframe src='' id='page'></iframe>
+	<div id="help">
+		<h3>Help</h3>
+		<p>PdWebKit lets you play your Pure Data patches on Android devices with custom interfaces built in HTML and Javascript. See [the documentation](http://mccormick.cx/projects/PdWebKit/) for instructions on how to build an interface for your patch and get it running on your device.</p>
+		<button class='info' onclick='document.getElementById("help").style.display = "none";'>Ok</button>
+	</div>
+	<div id="about">
+		<a href='http://podsix.com.au/'><img src='podsix.png' class='logo'></a>
+		<p>PdWebKit is copyright Chris McCormick, 2009, 2010.</p>
+		<p>This program is GPLv3 licensed. A copy of the LICENSE.txt is available online <a href='http://mccormick.cx/projects/PdWebKit/LICENSE.txt'>here</a>.</p>
+		<p>Obtain the sourcecode with bzr:<br/><code>bzr co http://mccormick.cx/dev/PdWebKit/</code></p>
+		<h3>Pure Data</h3>
+		<p>This program contains Pure Data by Miller S. Puckette, and pd-for-android by Peter Brinkmann. These are BSD licensed. See the file called LICENSE.txt for details. A copy of that file is available online <a href='http://mccormick.cx/projects/PdWebKit/LICENSE.txt'>here</a>.</p>
+		<button class='info' onclick='document.getElementById("about").style.display = "none";'>Ok</button>
+	</div>
+</body>
+
+</html>
