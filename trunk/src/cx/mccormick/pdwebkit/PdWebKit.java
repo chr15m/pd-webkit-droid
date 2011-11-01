@@ -14,7 +14,6 @@ import org.puredata.android.service.PdService;
 import org.puredata.android.utils.Properties;
 import org.puredata.android.io.AudioParameters;
 import org.puredata.core.PdBase;
-import org.puredata.core.utils.PdUtils;
 import org.puredata.core.utils.IoUtils;
 import org.puredata.core.utils.PdDispatcher;
 import org.puredata.core.utils.PdListener;
@@ -45,7 +44,7 @@ public class PdWebKit extends Activity {
 
 	private final Handler handler = new Handler();
 	private PdService pdService = null;
-	private String patch;
+	private int patch = -1;
 	private WebView mWebView;
 	private final PdWebKit that = this;
 
@@ -310,7 +309,7 @@ public class PdWebKit extends Activity {
 			post("loading: " + path);
 			Resources res = getResources();
 			try {
-				patch = PdUtils.openPatch(path + "/_main.pd");
+				patch = PdBase.openPatch(path + "/_main.pd");
 			} catch (IOException e) {
 				post(e.toString() + "; exiting now");
 				finish();
@@ -342,7 +341,7 @@ public class PdWebKit extends Activity {
 		String name = res.getString(R.string.app_name);
 		try {
 			if (AudioParameters.suggestSampleRate() < SAMPLE_RATE) {
-				post("required sample rate not available; exiting");
+				post("required sample rate not available (max " + AudioParameters.suggestSampleRate() + "); exiting");
 				finish();
 				return;
 			}
@@ -372,7 +371,9 @@ public class PdWebKit extends Activity {
 		Resources res = getResources();
 		// make sure to release all resources
 		if (pdService != null) pdService.stopAudio();
-		PdUtils.closePatch(patch);
+		if (patch != -1) {
+			PdBase.closePatch(patch);
+		}
 		PdBase.release();
 		try {
 			unbindService(serviceConnection);
